@@ -17,15 +17,15 @@ const themes = {
   },
   green: {
     '--color-black': '#000',
-    '--color-primary': '#006600',
-    '--color-secondary': '#006827',
-    '--color-tertiary': '#CCCCCC',
+    '--color-primary': '#154734',
+    '--color-secondary': '#f2c75c',
+    '--color-tertiary': '#B7CDC26B',
     '--color-white': '#FFFFFF',
   },
 };
 
 export default function ThemeStyles() {
-  const themeColor = appConfig?.themeColor ?? 'blue';
+  const themeColor = appConfig?.themeColor ?? 'green';
 
   return (
     // eslint-disable-next-line react/no-unknown-property
