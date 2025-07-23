@@ -2,7 +2,8 @@
 
 .footer {
   position: relative;
-  background-color: var(--color-primary);
+  // background-color: var(--color-primary);
+  background: linear-gradient(135deg, var(--color-primary) 15%, #26825f);
   padding: 3rem;
   margin-top: 4rem;
   color: var(--color-white);

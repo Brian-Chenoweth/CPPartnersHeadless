@@ -21,6 +21,7 @@ const themes = {
     '--color-secondary': '#f2c75c',
     '--color-tertiary': '#B7CDC26B',
     '--color-white': '#FFFFFF',
+    '--color-lime': '#a4d65e',
   },
 };
 
@@ -36,6 +37,7 @@ export default function ThemeStyles() {
         --color-secondary: ${themes[themeColor]['--color-secondary']};
         --color-tertiary: ${themes[themeColor]['--color-tertiary']};
         --color-white: ${themes[themeColor]['--color-white']};
+        --color-lime: ${themes[themeColor]['--color-lime']};
       }
     `}</style>
   );

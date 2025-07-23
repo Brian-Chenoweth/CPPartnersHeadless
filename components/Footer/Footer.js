@@ -19,7 +19,7 @@ let cx = classNames.bind(styles);
  * The Blueprint's Footer component
  * @return {React.ReactElement} The Footer component.
  */
-export default function Footer({ menuItems }) {
+export default function Footer({ title, menuItems }) {
   return (
     <footer className={cx('footer')}>
       <div className="container">
@@ -119,10 +119,7 @@ export default function Footer({ menuItems }) {
         <NavigationMenu className={cx('nav')} menuItems={menuItems} />
 
         <div className={cx('copyright')}>
-          &copy; {new Date().getFullYear()} Blueprint Media &#183; Powered By{' '}
-          <a href="https://wpengine.com/headless-wordpress">
-            Headless Platform
-          </a>
+          &copy; {new Date().getFullYear()} {title}
         </div>
       </div>
     </footer>

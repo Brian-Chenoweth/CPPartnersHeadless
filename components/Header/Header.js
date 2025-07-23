@@ -35,7 +35,7 @@ export default function Header({ className, menuItems }) {
                   src="/logo.png"
                   width={400}
                   height={80}
-                  alt="Blueprint media logo"
+                  alt="Cal Poly University logo"
                   layout="responsive"
                 />
               </a>
