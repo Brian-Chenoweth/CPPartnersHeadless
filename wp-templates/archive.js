@@ -65,8 +65,8 @@ export default function Archive(props) {
       <Footer
   title={siteTitle}
   menuItems={footerMenu}
-  navOneMenuItems={props?.data?.footerSecondaryMenuItems?.nodes ?? []}
-  quickLinksMenuItems={props?.data?.footerTertiaryMenuItems?.nodes ?? []}
+  navOneMenuItems={data?.footerSecondaryMenuItems?.nodes ?? []}
+  quickLinksMenuItems={data?.footerTertiaryMenuItems?.nodes ?? []}
 />
     </>
   );

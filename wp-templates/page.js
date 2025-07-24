@@ -54,8 +54,8 @@ export default function Component(props) {
       <Footer
   title={siteTitle}
   menuItems={footerMenu}
-  navOneMenuItems={props?.data?.footerSecondaryMenuItems?.nodes ?? []}
-  quickLinksMenuItems={props?.data?.footerTertiaryMenuItems?.nodes ?? []}
+  navOneMenuItems={data?.footerSecondaryMenuItems?.nodes ?? []}
+  quickLinksMenuItems={data?.footerTertiaryMenuItems?.nodes ?? []}
 />
     </>
   );
