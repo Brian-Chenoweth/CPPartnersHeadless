@@ -115,7 +115,14 @@ export default function Component() {
           </section>
         </div>
       </Main>
-      <Footer menuItems={footerMenu} />
+      <Footer
+        title={siteTitle}
+        menuItems={footerMenu}
+        navOneMenuItems={data?.footerSecondaryMenuItems?.nodes ?? []}
+        navTwoMenuItems={data?.footerTertiaryMenuItems?.nodes ?? []}
+      />
+
+
     </>
   );
 }
@@ -124,6 +131,8 @@ Component.variables = () => {
   return {
     headerLocation: MENUS.PRIMARY_LOCATION,
     footerLocation: MENUS.FOOTER_LOCATION,
+    footerSecondaryLocation: MENUS.FOOTER_SECONDARY_LOCATION,
+    footerTertiaryLocation: MENUS.FOOTER_TERTIARY_LOCATION,
     first: postsPerPage,
   };
 };
@@ -136,6 +145,8 @@ Component.query = gql`
   query GetPageData(
     $headerLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
+    $footerSecondaryLocation: MenuLocationEnum
+    $footerTertiaryLocation: MenuLocationEnum
     $first: Int
   ) {
     posts(first: $first) {
@@ -156,10 +167,20 @@ Component.query = gql`
         ...NavigationMenuItemFragment
       }
     }
-    footerMenuItems: menuItems(where: { location: $footerLocation }) {
-      nodes {
-        ...NavigationMenuItemFragment
-      }
-    }
+   footerMenuItems: menuItems(where: { location: $footerLocation }) {
+  nodes {
+    ...NavigationMenuItemFragment
+  }
+}
+footerSecondaryMenuItems: menuItems(where: { location: $footerSecondaryLocation }) {
+  nodes {
+    ...NavigationMenuItemFragment
+  }
+}
+footerTertiaryMenuItems: menuItems(where: { location: $footerTertiaryLocation }) {
+  nodes {
+    ...NavigationMenuItemFragment
+  }
+}
   }
 `;

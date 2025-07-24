@@ -19,6 +19,8 @@ export default function SEO({ title, description, imageUrl, url }) {
   return (
     <>
       <Head>
+        <link rel="stylesheet" href="https://use.typekit.net/umi1lem.css"/>
+        <link rel="stylesheet" href="https://use.typekit.net/mfv5sni.css"/>
         <meta property="og:type" content="website" />
         <meta property="twitter:card" content="summary_large_image" />
 

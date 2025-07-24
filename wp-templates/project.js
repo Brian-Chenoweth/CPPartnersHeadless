@@ -45,7 +45,12 @@ export default function Component(props) {
         </div>
       </Main>
 
-      <Footer title={siteTitle} menuItems={footerMenu} />
+      <Footer
+  title={siteTitle}
+  menuItems={footerMenu}
+  navOneMenuItems={props?.data?.footerSecondaryMenuItems?.nodes ?? []}
+  quickLinksMenuItems={props?.data?.footerTertiaryMenuItems?.nodes ?? []}
+/>
     </>
   );
 }
