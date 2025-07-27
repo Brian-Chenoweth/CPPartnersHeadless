@@ -86,7 +86,7 @@ Page.query = gql`
     generalSettings {
       ...BlogInfoFragment
     }
-    headerMenuItems: menuItems(where: { location: $headerLocation }) {
+    headerMenuItems: menuItems(where: { location: $headerLocation }, first: 100) {
       nodes {
         ...NavigationMenuItemFragment
       }
