@@ -17,8 +17,21 @@ h6 {
 }
 
 h1 {
-  font-size: 4.8rem;
+  font-size: 12rem;
   line-height: 150%;
+  text-transform: uppercase;
+  font-family: 'Source Sans Pro', Helvetica, Arial, Lucida, sans-serif;
+  letter-spacing: 5px;
+  line-height: 0.95em;
+  text-align: left;
+  font-weight: 600;
+  margin-bottom: 0;
+  @media (max-width: 950px) {
+    font-size: 10rem;
+  }
+  @media (max-width: 790px) {
+    font-size: 8rem;
+  }
 }
 
 h2 {
