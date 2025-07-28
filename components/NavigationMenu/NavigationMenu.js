@@ -6,7 +6,7 @@ export default function NavigationMenu({ menuItems, className, children }) {
     return null;
   }
 
-  // Convert flat list to a tree structure
+  // Convert flat list to tree structure
   const buildMenuTree = (items) => {
     const map = {};
     const roots = [];
@@ -27,16 +27,18 @@ export default function NavigationMenu({ menuItems, className, children }) {
   };
 
   const renderMenuItems = (items) => {
-    return items.map((item) => (
-      <li key={item.id ?? ''}>
-        <Link href={item.path ?? ''}>{item.label ?? ''}</Link>
-        {item.children?.length > 0 && (
-          <ul>
-            {renderMenuItems(item.children)}
-          </ul>
-        )}
-      </li>
-    ));
+    return items.map((item) => {
+      const hasChildren = item.children?.length > 0;
+      return (
+        <li
+          key={item.id ?? ''}
+          className={hasChildren ? 'hasChildren' : undefined}
+        >
+          <Link href={item.path ?? ''}>{item.label ?? ''}</Link>
+          {hasChildren && <ul>{renderMenuItems(item.children)}</ul>}
+        </li>
+      );
+    });
   };
 
   const menuTree = buildMenuTree(menuItems);

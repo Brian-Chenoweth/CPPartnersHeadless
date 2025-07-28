@@ -6,9 +6,11 @@
   background-color: var(--color-primary);
 
   @media (min-width: $breakpoint-small) {
-    margin-bottom: 10rem;
+    margin: 10rem 0;
   }
 }
+
+
 
 .text,
 .image {
@@ -38,7 +40,7 @@
 
   &:before {
     content: ' ';
-    position: absolute;
+    // position: absolute;
     height: 50%;
     width: 100%;
     background-color: var(--color-white);

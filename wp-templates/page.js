@@ -52,11 +52,12 @@ export default function Component(props) {
         </>
       </Main>
       <Footer
-  title={siteTitle}
-  menuItems={footerMenu}
-  navOneMenuItems={data?.footerSecondaryMenuItems?.nodes ?? []}
-  quickLinksMenuItems={data?.footerTertiaryMenuItems?.nodes ?? []}
-/>
+        title={siteTitle}
+        menuItems={footerMenu}
+        navOneMenuItems={props?.data?.footerSecondaryMenuItems?.nodes ?? []}
+        quickLinksMenuItems={props?.data?.footerTertiaryMenuItems?.nodes ?? []}
+      />
+
     </>
   );
 }
@@ -66,9 +67,12 @@ Component.variables = ({ databaseId }, ctx) => {
     databaseId,
     headerLocation: MENUS.PRIMARY_LOCATION,
     footerLocation: MENUS.FOOTER_LOCATION,
+    footerSecondaryLocation: MENUS.FOOTER_SECONDARY_LOCATION,
+    footerTertiaryLocation: MENUS.FOOTER_TERTIARY_LOCATION,
     asPreview: ctx?.asPreview,
   };
 };
+
 
 Component.query = gql`
   ${BlogInfoFragment}
@@ -78,6 +82,8 @@ Component.query = gql`
     $databaseId: ID!
     $headerLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
+    $footerSecondaryLocation: MenuLocationEnum
+    $footerTertiaryLocation: MenuLocationEnum
     $asPreview: Boolean = false
   ) {
     page(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
@@ -88,12 +94,22 @@ Component.query = gql`
     generalSettings {
       ...BlogInfoFragment
     }
+    headerMenuItems: menuItems(where: { location: $headerLocation }, first: 100) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
+    }
     footerMenuItems: menuItems(where: { location: $footerLocation }) {
       nodes {
         ...NavigationMenuItemFragment
       }
     }
-    headerMenuItems: menuItems(where: { location: $headerLocation }, first: 100) {
+    footerSecondaryMenuItems: menuItems(where: { location: $footerSecondaryLocation }) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
+    }
+    footerTertiaryMenuItems: menuItems(where: { location: $footerTertiaryLocation }) {
       nodes {
         ...NavigationMenuItemFragment
       }

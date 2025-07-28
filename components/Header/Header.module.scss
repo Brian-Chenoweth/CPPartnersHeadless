@@ -2,6 +2,12 @@
 
 .header {
   color: var(--color-white);
+  background-color: #f8f8f7;
+  // padding: 1rem 0;
+}
+
+.logo-wrap {
+  padding: 1rem 0;
   background-color: var(--color-primary);
 }
 
@@ -16,6 +22,24 @@
 .logo {
   width: 200px;
   height: auto;
+}
+
+.titleName {
+    color: var(--color-primary);
+    font-family: "utopia-std-display", serif;
+    // font-style: normal;
+    // font-weight: 200;
+    text-transform: capitalize;
+    letter-spacing: 0;
+    font-size: 3.2rem;
+    display: inline-block;
+    color: #154734;
+    text-decoration-color: #BD8B13;
+    transition: all .4s;
+    &:hover {
+      text-decoration: underline;
+      text-decoration-color: #BD8B13;
+    }
 }
 
 .nav-toggle {
@@ -69,40 +93,45 @@
       margin: 0 0.5rem;
     }
 
-        li {
-      position: relative;
+li {
+  position: relative;
 
-      // Existing margin
-      margin: 0 0.5rem;
+  ul {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    background-color: #e4ece8;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    min-width: 180px;
+    z-index: 999;
 
-      ul {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        background-color: var(--color-primary);
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        z-index: 1000;
-        min-width: 180px;
-        text-align: left;
-
-        li {
-          margin: 0;
-        }
-
-        a {
-          display: block;
-          padding: 1rem;
-          white-space: nowrap;
-        }
-      }
-
-      &:hover > ul {
+    li {
+      a {
         display: block;
+        padding: 1rem 1.5rem;
+        color: var(--color-primary);
+        white-space: nowrap;
+
+        &:hover {
+          background-color: #dbe4dd;
+        }
       }
     }
+  }
+
+  &:hover > ul {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+  }
+}
+
 
 
     a {
@@ -111,12 +140,12 @@
       height: 100%;
       padding: 1rem;
       font-weight: $font-weight-bold;
-      color: var(--color-white);
+      color: var(--color-primary);
 
       &:hover,
       &:focus {
         border: 1px solid var(--color-white);
-        color: var(--color-white);
+        // color: var(--color-white);
         padding: 0.9rem;
       }
     }

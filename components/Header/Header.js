@@ -25,22 +25,36 @@ export default function Header({ className, menuItems }) {
 
   return (
     <header className={headerClasses}>
+
+
+        <div className={cx('logo-wrap')}>
+          <div className="container">
+            <div className={cx('logo')}>
+                <Link legacyBehavior href="/">
+                  <a title="Home">
+                    <Image
+                      src="/logo.png"
+                      width={400}
+                      height={80}
+                      alt="Cal Poly University logo"
+                      layout="responsive"
+                    />
+                  </a>
+                </Link>
+              </div>
+          </div>  
+        </div>
+
       <SkipNavigationLink />
       <div className="container">
         <div className={cx('bar')}>
-          <div className={cx('logo')}>
-            <Link legacyBehavior href="/">
-              <a title="Home">
-                <Image
-                  src="/logo.png"
-                  width={400}
-                  height={80}
-                  alt="Cal Poly University logo"
-                  layout="responsive"
-                />
-              </a>
-            </Link>
-          </div>
+
+
+
+          <a href="/" className={cx('titleName')}>Cal Poly Partners</a>
+
+
+
           <button
             type="button"
             className={cx('nav-toggle')}
