@@ -1,5 +1,5 @@
 import className from 'classnames/bind';
-import { FeaturedImage, Heading, PostInfo } from 'components';
+import { FeaturedImage, Heading } from 'components';
 
 import styles from './EntryHeader.module.scss';
 const cx = className.bind(styles);
@@ -14,7 +14,6 @@ const cx = className.bind(styles);
  * @return {React.ReactElement} The EntryHeader component.
  */
 export default function EntryHeader({ title, image, date, author, className }) {
-  const hasText = title || date || author;
 
   return (
     <div className={cx(['entry-header', className])}>
