@@ -2,9 +2,9 @@
 
 .entry-header {
   color: var(--color-white);
-
+    
   @media (min-width: $breakpoint-small) {
-
+    margin-top: 155px;
   }
 }
 
@@ -68,6 +68,7 @@
 
 .title {
   line-height: 1em;
+  font-weight: 700;
 }
 
 .byline {

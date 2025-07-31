@@ -261,6 +261,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  p {
+    text-align: center;
+  }
 }
 
 .green-image-right {
@@ -343,7 +346,7 @@
 .wp-block-details {
   background-color: var(--color-tertiary);
   padding: 2em;
-
+  text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -368,4 +371,32 @@
     text-align: center;
     margin-top: 3rem;
   }
+}
+
+
+
+.wp-block-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin: 6rem 0;
+
+  figcaption {
+    font-size: 1.75rem !important;
+    margin: 0;
+    padding: 1rem !important;
+    line-height: 1.5;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0, rgba(0, 0, 0, 0.4) 70%, transparent);
+  }
+
+}
+
+.wp-block-gallery figure {
+  flex: 1 1 66%;
+  max-width: 66%;
+}
+
+.wp-block-gallery figure:nth-child(2n) {
+  flex: 1 1 32%;
+  max-width: 32%;
 }
