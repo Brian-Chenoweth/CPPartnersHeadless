@@ -23,6 +23,10 @@ export default function SEO({ title, description, imageUrl, url }) {
         <link rel="stylesheet" href="https://use.typekit.net/mfv5sni.css"/>
         <link rel="stylesheet" href="https://use.typekit.net/qnm1phw.css"/>
         <link rel="stylesheet" href="https://use.typekit.net/ato6pec.css"/>
+        <link rel="preconnect" href="https://fonts.googleapis.com"/>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet"/>
+
         <meta property="og:type" content="website" />
         <meta property="twitter:card" content="summary_large_image" />
 
