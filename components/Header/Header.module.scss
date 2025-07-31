@@ -3,19 +3,43 @@
 .header {
   color: var(--color-white);
   background-color: #f8f8f7;
-  // padding: 1rem 0;
+  transition: background-color 0.4s ease-in-out, transform 0.4s ease-in-out;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 9999999;
+
+  &.scrolled {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    height: 76px;
+  }
 }
 
 .logo-wrap {
+  transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
   padding: 1rem 0;
   background-color: var(--color-primary);
+
+  &.scrolled {
+    transform: translateY(-20px);
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.header-content {
+  transition: transform 0.4s ease-in-out;
+
+  &.scrolled {
+    transform: translateY(-76px);
+  }
 }
 
 .bar {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  // padding: 1rem 0;
+  padding: 1.25rem 0;
   gap: 2rem;
 }
 
@@ -25,21 +49,19 @@
 }
 
 .titleName {
-    color: var(--color-primary);
-    font-family: "utopia-std-display", serif;
-    // font-style: normal;
-    // font-weight: 200;
-    text-transform: capitalize;
-    letter-spacing: 0;
-    font-size: 3.2rem;
-    display: inline-block;
-    color: #154734;
+  color: #154734;
+  font-family: "utopia-std-display", serif;
+  text-transform: capitalize;
+  letter-spacing: 0;
+  font-size: 3.2rem;
+  display: inline-block;
+  text-decoration-color: #BD8B13;
+  transition: all 0.4s;
+
+  &:hover {
+    text-decoration: underline;
     text-decoration-color: #BD8B13;
-    transition: all .4s;
-    &:hover {
-      text-decoration: underline;
-      text-decoration-color: #BD8B13;
-    }
+  }
 }
 
 .nav-toggle {
@@ -84,7 +106,7 @@
 
 
   :global(.menu) {
-    // padding: 1.25rem 0;
+    
 
     display: flex;
     flex-direction: column;
@@ -100,8 +122,8 @@
 
     :global(li.hasChildren > a::after) {
       font-family: 'Font Awesome 6 Free';
-      font-weight: 900; // required for Font Awesome solid icons
-      content: '\f078'; // the arrow
+      font-weight: 900;
+      content: '\f078';
       display: inline-block;
       text-rendering: auto;
       -webkit-font-smoothing: antialiased;
@@ -140,7 +162,7 @@
     top: 100%;
     right: 0;
     margin: 0;
-    padding: 0.5rem 0 0 0; // buffer to prevent flicker
+    padding: 0.5rem 0 0 0;
     background-color: #e4ece8;
     list-style: none;
     border-top: 3px solid var(--color-primary);
@@ -170,7 +192,6 @@
         border-top: 3px solid var(--color-primary) !important;
         top: 0;
         right: 100%;
-        // transform: translateX(6px);
         background-color: #e4ece8;
         min-width: 240px;
         border-top: none;

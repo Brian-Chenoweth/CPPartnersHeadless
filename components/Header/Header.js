@@ -11,15 +11,32 @@ let cx = classNames.bind(styles);
 
 export default function Header({ className, menuItems }) {
   const [isNavShown, setIsNavShown] = useState(false);
-  const menuRef = useRef(null); // ✅ ref to the nav menu container
+  const [isScrolled, setIsScrolled] = useState(false);
+  const menuRef = useRef(null);
 
-  const headerClasses = cx('header', className);
+  // Classes with scroll-aware styles
+  const headerClasses = cx('header', className, { scrolled: isScrolled });
+  const logoWrapClasses = cx('logo-wrap', { scrolled: isScrolled });
+  const headerContentClasses = cx('container', 'header-content', {
+    scrolled: isScrolled,
+  });
+
   const navClasses = cx(
     'primary-navigation',
     isNavShown ? cx('show') : undefined
   );
 
-  // ✅ Handle submenu overflow flipping
+  // Handle scroll detection
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Handle submenu overflow flipping
   useEffect(() => {
     const items = menuRef.current?.querySelectorAll('li') || [];
 
@@ -41,7 +58,7 @@ export default function Header({ className, menuItems }) {
       };
 
       li.addEventListener('mouseenter', handleEnter);
-      li.addEventListener('focusin', handleEnter); // keyboard support
+      li.addEventListener('focusin', handleEnter);
 
       // cleanup
       return () => {
@@ -53,7 +70,7 @@ export default function Header({ className, menuItems }) {
 
   return (
     <header className={headerClasses}>
-      <div className={cx('logo-wrap')}>
+      <div className={logoWrapClasses}>
         <div className="container">
           <div className={cx('logo')}>
             <Link legacyBehavior href="/">
@@ -73,7 +90,7 @@ export default function Header({ className, menuItems }) {
 
       <SkipNavigationLink />
 
-      <div className="container">
+      <div className={headerContentClasses}>
         <div className={cx('bar')}>
           <a href="/" className={cx('titleName')}>
             Cal Poly Partners
@@ -94,7 +111,7 @@ export default function Header({ className, menuItems }) {
             id={cx('primary-navigation')}
             className={navClasses}
             menuItems={menuItems}
-            ref={menuRef} // ✅ add ref here
+            ref={menuRef}
           >
             <li>
               <Link legacyBehavior href="/search">
