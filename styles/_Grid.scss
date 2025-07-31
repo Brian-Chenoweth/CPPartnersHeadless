@@ -225,7 +225,27 @@
   }
 
   .wp-block-media-text__content {
-    padding: 0 4% 0 4% !important;
+    // padding: 0 4% 0 4% !important;
+  }
+
+  a {
+    transition: all .3s;
+    color: var(--color-primary);
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    &:hover {
+      // text-decoration: 2px solid #BD8B13 underline;
+    }
+    &::before {
+      font-family: 'Font Awesome 6 Free';
+      display: inline-block;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+       content: '\f061';
+       color: #BD8B13;
+       margin-right: .5rem;
+    }
   }
 
 }
@@ -279,6 +299,14 @@
 .wp-block-media-text__content {
   padding-right: 0 !important;
  }
+}
+
+.yellow-image-left {
+  a {
+    &:hover {
+      color: var(--color-white);
+    }
+  }
 }
 
 .wp-block-table table {
