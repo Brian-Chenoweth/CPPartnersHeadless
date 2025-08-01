@@ -15,7 +15,8 @@ import {
   Footer,
   Posts,
   Testimonials,
-  HomepageIntro
+  HomepageIntro,
+  HomepageNonprofit,
 } from 'components';
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
 
@@ -52,7 +53,8 @@ export default function Component() {
       <Main className={styles.home}>
         <EntryHeader image={mainBanner} />
         <div className="container">
-          <HomepageIntro/>
+          <HomepageIntro />
+          <HomepageNonprofit />
           <section className={styles.posts}>
             <Heading className={styles.heading} level="h2">
               Latest Posts
