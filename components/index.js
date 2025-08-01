@@ -7,6 +7,7 @@ import FormatDate from './FormatDate';
 import Heading from './Heading';
 import HomepageIntro from './HomepageIntro';
 import HomepageNonprofit from './HomepageNonprofit';
+import HomepageTicker from './HomepageTicker';
 import Header from './Header';
 import LoadMore from './LoadMore';
 import Main from './Main';
@@ -36,6 +37,7 @@ export {
   Heading,
   HomepageIntro,
   HomepageNonprofit,
+  HomepageTicker,
   Header,
   LoadMore,
   Main,
