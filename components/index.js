@@ -9,6 +9,7 @@ import HomepageAdvancing from './HomepageAdvancing';
 import HomepageAttainableHousing from './HomepageAttainableHousing';
 import HomepageCampusLife from './HomepageCampusLife';
 import HomepageEmpowering from './HomepageEmpowering';
+import HomepageFoodInsecurity from './HomepageFoodInsecurity';
 import HomepageIntro from './HomepageIntro';
 import HomepageNonprofit from './HomepageNonprofit';
 import HomepageTestimonials from './HomepageTestimonials';
@@ -44,6 +45,7 @@ export {
   HomepageAttainableHousing,
   HomepageCampusLife,
   HomepageEmpowering,
+  HomepageFoodInsecurity,
   HomepageIntro,
   HomepageNonprofit,
   HomepageTestimonials,
