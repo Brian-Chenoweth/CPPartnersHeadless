@@ -10,10 +10,12 @@ import {
   ContentWrapper,
   FeaturedImage,
   SEO,
-  TaxonomyTerms,
+  Posts,
 } from 'components';
+import Image from 'next/image';
 import { pageTitle } from 'utilities';
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
+import styles from 'styles/pages/_Home.module.scss';
 
 export default function Component(props) {
   // Loading state for previews
@@ -26,6 +28,7 @@ export default function Component(props) {
   const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
   const { title, content, featuredImage, date, author } = props.data.post;
+  const recentPosts = props?.data?.posts?.nodes ?? [];
 
   return (
     <>
@@ -45,18 +48,23 @@ export default function Component(props) {
       />
       <Main>
         <>
-          <EntryHeader
-            title={title}
-            image={featuredImage?.node}
-            date={date}
-            author={author?.node?.name}
-          />
           <div className="container">
-            <ContentWrapper content={content}>
-              <TaxonomyTerms post={props.data.post} taxonomy={'categories'} />
-              <TaxonomyTerms post={props.data.post} taxonomy={'tags'} />
-            </ContentWrapper>
+            <h1 className="postTitle">{title}</h1>
+            <Image
+              src={featuredImage?.node?.sourceUrl}
+              width={400}
+              height={80}
+              alt="Cal Poly University logo"
+              layout="responsive"
+            />
+            <ContentWrapper content={content} />
           </div>
+
+          {/* ✅ Recent Posts Section */}
+          <section className={`${styles.posts} container`}>
+            <h2 className={styles.heading}>Recent Posts</h2>
+            <Posts posts={recentPosts} />
+          </section>
         </>
       </Main>
       <Footer
@@ -73,6 +81,8 @@ Component.query = gql`
   ${BlogInfoFragment}
   ${NavigationMenu.fragments.entry}
   ${FeaturedImage.fragments.entry}
+  ${Posts.fragments.entry}
+
   query GetPost(
     $databaseId: ID!
     $headerLocation: MenuLocationEnum
@@ -108,24 +118,35 @@ Component.query = gql`
       }
       ...FeaturedImageFragment
     }
+
+    posts(first: 3) {
+      nodes {
+        ...PostsItemFragment
+      }
+    }
+
     generalSettings {
       ...BlogInfoFragment
     }
+
     headerMenuItems: menuItems(where: { location: $headerLocation }, first: 100) {
       nodes {
         ...NavigationMenuItemFragment
       }
     }
+
     footerMenuItems: menuItems(where: { location: $footerLocation }) {
       nodes {
         ...NavigationMenuItemFragment
       }
     }
+
     footerSecondaryMenuItems: menuItems(where: { location: $footerSecondaryLocation }) {
       nodes {
         ...NavigationMenuItemFragment
       }
     }
+
     footerTertiaryMenuItems: menuItems(where: { location: $footerTertiaryLocation }) {
       nodes {
         ...NavigationMenuItemFragment
