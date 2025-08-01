@@ -207,6 +207,25 @@
   h2 {
     margin-bottom: 3.5rem;
   }
+  a {
+    transition: all .3s;
+    color: var(--color-primary);
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    &:hover {
+      // text-decoration: 2px solid #BD8B13 underline;
+    }
+    &::before {
+      font-family: 'Font Awesome 6 Free';
+      display: inline-block;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+       content: '\f061';
+       color: #BD8B13;
+       margin-right: .5rem;
+    }
+  }
 }
 
 .green-image-right, .white-image-left, .white-image-right, .yellow-image-left, .bg-green, .bg-white, .bg-yellow {
@@ -483,4 +502,21 @@
   transform: scale(1.1);   // Make center slide larger
   opacity: 1;              // Full opacity for center
   z-index: 2;              // Bring it above other slides
+}
+
+
+
+.is-type-video.centered {
+  .wp-block-embed__wrapper {
+    width: 75%;
+  }
+  iframe {
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 16 / 9;
+  }
+}
+
+.standalone-link {
+  border: 2px dashed orange !important;
 }
