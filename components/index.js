@@ -5,6 +5,7 @@ import EntryHeader from './EntryHeader';
 import FeaturedImage from './FeaturedImage';
 import FormatDate from './FormatDate';
 import Heading from './Heading';
+import HomepageIntro from './HomepageIntro';
 import Header from './Header';
 import LoadMore from './LoadMore';
 import Main from './Main';
@@ -32,6 +33,7 @@ export {
   FeaturedImage,
   FormatDate,
   Heading,
+  HomepageIntro,
   Header,
   LoadMore,
   Main,

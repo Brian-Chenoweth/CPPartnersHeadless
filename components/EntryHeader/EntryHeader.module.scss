@@ -35,6 +35,11 @@
     justify-content: center;
     align-items: center;
     font-weight: 700;
+    font-size: 14.5rem;
+    @media screen and (max-width: 925px) {
+      font-size: 10rem;
+      
+    }
 }
 
 
