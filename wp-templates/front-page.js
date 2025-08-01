@@ -19,6 +19,7 @@ import {
   HomepageIntro,
   HomepageNonprofit,
   HomepageTicker,
+  HomepageAdvancing,
 } from 'components';
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
 
@@ -59,6 +60,7 @@ export default function Component() {
           <HomepageNonprofit />
           <HomepageTicker />
           <HomepageCampusLife />
+          <HomepageAdvancing />
           <section className={styles.posts}>
             <Heading className={styles.heading} level="h2">
               Latest Posts
