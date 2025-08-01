@@ -15,6 +15,7 @@ import {
   Footer,
   Posts,
   Testimonials,
+  HomepageCampusLife,
   HomepageIntro,
   HomepageNonprofit,
   HomepageTicker,
@@ -57,6 +58,7 @@ export default function Component() {
           <HomepageIntro />
           <HomepageNonprofit />
           <HomepageTicker />
+          <HomepageCampusLife />
           <section className={styles.posts}>
             <Heading className={styles.heading} level="h2">
               Latest Posts
