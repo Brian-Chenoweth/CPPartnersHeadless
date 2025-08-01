@@ -63,11 +63,11 @@ function Posts({ posts, intro, id }) {
                     </a>
                   </Link>
                 </Heading>
-                <PostInfo
+                {/* <PostInfo
                   className={cx('info')}
                   author={post?.author?.node?.name}
                   date={post?.date}
-                />
+                /> */}
               </div>
             </div>
           );

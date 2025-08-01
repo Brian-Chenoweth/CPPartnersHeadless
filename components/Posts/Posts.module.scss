@@ -3,12 +3,15 @@
 .post-list {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
-  column-gap: 5rem;
-  row-gap: 6rem;
+  column-gap: 2rem;
+  row-gap: 4rem;
   margin-bottom: 6rem;
 
   @media (min-width: $breakpoint-small) {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (min-width: $breakpoint-medium) {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
@@ -34,10 +37,30 @@
 .header {
   margin-bottom: 1rem;
   padding: 0 2rem;
+  // color: pink;
+  font-size: 2rem;
+  line-height: 2.5rem;
+  font-weight: 700;
+  text-align: left;
+  letter-spacing: normal;
+  font-family: 'Source Sans Pro', Helvetica, Arial, Lucida, sans-serif;
+  padding: 0;
+  color: var(--color-primary);
+  transition: all .3s;
+  text-transform: capitalize;
+
+  a {
+    transition: all .3s;
+    color: var(--color-primary);
+    font-family: 'Source Sans Pro', Helvetica, Arial, Lucida, sans-serif;
+    &:hover {
+      color: #BD8B13;
+    }
+  }
 
   a:hover,
   a:focus {
-    color: var(--color-primary);
+    color: #BD8B13;
   }
 }
 
@@ -48,9 +71,14 @@
 }
 
 .image-holder {
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
 
   @media (min-width: $breakpoint-small) {
-    aspect-ratio: 1 / 1;
+    // aspect-ratio: 1 / 1;
+
+    img {
+      aspect-ratio: 16 / 9;
+    }
+
   }
 }

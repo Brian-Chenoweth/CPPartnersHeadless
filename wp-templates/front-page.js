@@ -69,17 +69,18 @@ export default function Component() {
           <HomepageAttainableHousing />
           <HomepageEmpowering />
           <HomepageFoodInsecurity />
-          <section className={styles.posts}>
-            <Heading className={styles.heading} level="h2">
-              Latest Posts
-            </Heading>
-            <Posts posts={data.posts?.nodes} id="posts-list" />
-          </section>
           <section className={styles.testimonials}>
             <Heading className={styles.heading} level="h2">
               Testimonials
             </Heading>
             <Testimonials testimonials={data?.testimonials?.nodes} />
+          </section>
+          <HomepageFoodInsecurity />
+          <section className={styles.posts}>
+            <Heading className={styles.heading} level="h2">
+              News
+            </Heading>
+            <Posts posts={data.posts?.nodes} id="posts-list" />
           </section>
         </div>
       </Main>
