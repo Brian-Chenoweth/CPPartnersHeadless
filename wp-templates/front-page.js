@@ -67,7 +67,6 @@ export default function Component() {
           <HomepageAdvancing />
           <HomepageTestimonials />
           <HomepageAttainableHousing />
-          <HomepageEmpowering />
           {/* <HomepageFoodInsecurity /> */}
           <section className={styles.testimonials}>
             <Heading className={styles.heading} level="h2">
@@ -75,6 +74,7 @@ export default function Component() {
             </Heading>
             <Testimonials testimonials={data?.testimonials?.nodes} />
           </section>
+          <HomepageEmpowering />
           <HomepageFoodInsecurity />
           <section className={styles.posts}>
             <Heading className={styles.heading} level="h2">
