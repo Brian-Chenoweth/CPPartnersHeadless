@@ -18,6 +18,7 @@ import {
   HomepageCampusLife,
   HomepageIntro,
   HomepageNonprofit,
+  HomepageTestimonials,
   HomepageTicker,
   HomepageAdvancing,
 } from 'components';
@@ -61,6 +62,7 @@ export default function Component() {
           <HomepageTicker />
           <HomepageCampusLife />
           <HomepageAdvancing />
+          <HomepageTestimonials />
           <section className={styles.posts}>
             <Heading className={styles.heading} level="h2">
               Latest Posts

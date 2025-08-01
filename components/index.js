@@ -9,6 +9,7 @@ import HomepageAdvancing from './HomepageAdvancing';
 import HomepageCampusLife from './HomepageCampusLife';
 import HomepageIntro from './HomepageIntro';
 import HomepageNonprofit from './HomepageNonprofit';
+import HomepageTestimonials from './HomepageTestimonials';
 import HomepageTicker from './HomepageTicker';
 import Header from './Header';
 import LoadMore from './LoadMore';
@@ -41,6 +42,7 @@ export {
   HomepageCampusLife,
   HomepageIntro,
   HomepageNonprofit,
+  HomepageTestimonials,
   HomepageTicker,
   Header,
   LoadMore,
