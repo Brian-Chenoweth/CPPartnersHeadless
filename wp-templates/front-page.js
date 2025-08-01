@@ -21,6 +21,7 @@ import {
   HomepageTestimonials,
   HomepageTicker,
   HomepageAdvancing,
+  HomepageAttainableHousing,
 } from 'components';
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
 
@@ -63,6 +64,7 @@ export default function Component() {
           <HomepageCampusLife />
           <HomepageAdvancing />
           <HomepageTestimonials />
+          <HomepageAttainableHousing />
           <section className={styles.posts}>
             <Heading className={styles.heading} level="h2">
               Latest Posts

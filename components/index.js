@@ -6,6 +6,7 @@ import FeaturedImage from './FeaturedImage';
 import FormatDate from './FormatDate';
 import Heading from './Heading';
 import HomepageAdvancing from './HomepageAdvancing';
+import HomepageAttainableHousing from './HomepageAttainableHousing';
 import HomepageCampusLife from './HomepageCampusLife';
 import HomepageIntro from './HomepageIntro';
 import HomepageNonprofit from './HomepageNonprofit';
@@ -39,6 +40,7 @@ export {
   FormatDate,
   Heading,
   HomepageAdvancing,
+  HomepageAttainableHousing,
   HomepageCampusLife,
   HomepageIntro,
   HomepageNonprofit,
