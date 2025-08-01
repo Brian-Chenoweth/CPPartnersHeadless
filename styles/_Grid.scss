@@ -454,3 +454,33 @@
   transition: transform 0.1s ease-out;
   will-change: transform;
 }
+
+
+
+
+.carousel .control-prev.control-arrow:before {
+    border-right: 8px solid black;
+}
+.carousel .control-next.control-arrow:before {
+    border-left: 8px solid black;
+}
+.carousel.carousel-slider .control-arrow:hover {
+  background-color: transparent;
+  // color: var(--color-primary);
+}
+
+.carousel figure {
+  padding: 0 2rem;
+}
+
+.carousel .slide {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  // opacity: 0.6;
+  transform: scale(0.9);
+}
+
+.carousel .slide.selected {
+  transform: scale(1.1);   // Make center slide larger
+  opacity: 1;              // Full opacity for center
+  z-index: 2;              // Bring it above other slides
+}
