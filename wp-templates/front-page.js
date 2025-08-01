@@ -66,14 +66,13 @@ export default function Component() {
           <HomepageCampusLife />
           <HomepageAdvancing />
           <HomepageTestimonials />
-          <HomepageAttainableHousing />
-          {/* <HomepageFoodInsecurity /> */}
           <section className={styles.testimonials}>
             <Heading className={styles.heading} level="h2">
               Testimonials
             </Heading>
             <Testimonials testimonials={data?.testimonials?.nodes} />
           </section>
+          <HomepageAttainableHousing />
           <HomepageEmpowering />
           <HomepageFoodInsecurity />
           <section className={styles.posts}>
