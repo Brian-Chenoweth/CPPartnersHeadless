@@ -18,7 +18,7 @@ import {
 } from 'components';
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
 
-const postsPerPage = 3;
+const postsPerPage = 4;
 
 export default function Component() {
   const { data, loading } = useQuery(Component.query, {
@@ -56,21 +56,6 @@ export default function Component() {
               Latest Posts
             </Heading>
             <Posts posts={data.posts?.nodes} id="posts-list" />
-          </section>
-          <section className="cta">
-            {/* <CTA
-              Button={() => (
-                <Button href="/posts">
-                  Get Started <FaArrowRight style={{ marginLeft: `1rem` }} />
-                </Button>
-              )}
-            >
-              <span>
-                Learn about Core Web Vitals and how Headless Platform can help
-                you reach your most demanding speed and user experience
-                requirements.
-              </span>
-            </CTA> */}
           </section>
           <section className={styles.testimonials}>
             <Heading className={styles.heading} level="h2">

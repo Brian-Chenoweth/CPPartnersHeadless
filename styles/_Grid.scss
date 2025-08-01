@@ -213,10 +213,12 @@
     font-weight: 700;
     text-transform: uppercase;
     text-decoration: none;
-    &:hover {
-      // text-decoration: 2px solid #BD8B13 underline;
-    }
-    &::before {
+  }
+  a.inline {
+    text-transform: none;
+  }
+  a:not(.inline) {
+        &::before {
       font-family: 'Font Awesome 6 Free';
       display: inline-block;
       text-rendering: auto;
