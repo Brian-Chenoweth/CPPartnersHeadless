@@ -2,7 +2,7 @@
 
 .home {
   section {
-    margin-bottom: 8rem;
+    margin-bottom: 0;
   }
 }
 
@@ -36,8 +36,13 @@
 
 .testimonials {
   text-align: center;
-
+padding: 6rem 0;
   .description {
     margin-bottom: 6rem;
   }
+}
+
+
+.posts {
+  padding: 6rem 0;
 }

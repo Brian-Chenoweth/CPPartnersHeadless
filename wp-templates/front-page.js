@@ -68,7 +68,7 @@ export default function Component() {
           <HomepageTestimonials />
           <HomepageAttainableHousing />
           <HomepageEmpowering />
-          <HomepageFoodInsecurity />
+          {/* <HomepageFoodInsecurity /> */}
           <section className={styles.testimonials}>
             <Heading className={styles.heading} level="h2">
               Testimonials

@@ -1,10 +1,34 @@
+import classNames from 'classnames/bind';
 import styles from './HomepageFoodInsecurity.module.scss';
+import Image from 'next/image';
+import Link from 'next/link';
 
 
 export default function HomepageFoodInsecurity() {
   return (
     <div className={styles.cta}>
-      <div className={styles.content}><h3>HomepageFoodInsecurity</h3></div>
+          <div class="wp-block-media-text has-media-on-the-right is-stacked-on-mobile yellow-image-right">
+            <div class="wp-block-media-text__content">
+              <h2 class="wp-block-heading">Alleviating Food Insecurity</h2>
+              <p>We partner closely with the university’s basic needs program to help alleviate food insecurity on campus. In the 2023-24 academic year, we aim to provide 50,000 meals to students in need. That’s a 4x increase over last year. This donation is in addition to our annual contribution to Cal Poly Athletics, ensuring that student-athletes have access to free or reduced meals.</p>
+              <p>
+                <Link legacyBehavior href="https://donate.stripe.com/5kAbLtgBw6WH6Ag7st">
+                  <a title="Donate Now" target='_blank'>
+                    Donate Now
+                  </a>
+                </Link>
+              </p>
+            </div>
+            <figure class="wp-block-media-text__media">
+              <Image
+                src="/home/glean-slo-volunteers-harvesting-oranges-food-rescue-program.jpg"
+                width={980}
+                height={630}
+                alt="Group of GleanSLO volunteers standing in a citrus orchard behind bins filled with freshly harvested oranges, smiling and holding a banner for the food rescue program."
+                layout="responsive"
+              />
+            </figure>
+          </div>
     </div>
   );
 }
