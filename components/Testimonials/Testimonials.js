@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 import { useEffect, useState } from 'react';
-import { FaQuoteLeft } from 'react-icons/fa';
+
 import className from 'classnames/bind';
 import TestimonialItem from '../TestimonialItem';
 
