@@ -1,74 +1,66 @@
 import { gql } from '@apollo/client';
-import {
-  FaChevronCircleLeft,
-  FaChevronCircleRight,
-  FaQuoteRight,
-} from 'react-icons/fa';
+import { useEffect, useState } from 'react';
+import { FaQuoteLeft } from 'react-icons/fa';
 import className from 'classnames/bind';
-import { Carousel } from 'react-responsive-carousel';
-
 import TestimonialItem from '../TestimonialItem';
 
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import styles from './Testimonials.module.scss';
 const cx = className.bind(styles);
 
-/**
- * Render the testimonials component
- *
- * @param {Props} props The props object.
- * @param {Testimonial[]} props.testimonials The array of testimonials.
- * @returns {React.ReactElement} The testimonials component.
- */
 export default function Testimonials({ testimonials }) {
-  return (
-    <>
-      <div className={cx('container')}>
-        <FaQuoteRight className={cx('quote-icon')} />
+  const [selected, setSelected] = useState([]);
 
-        <Carousel
-          showIndicators={false}
-          showThumbs={false}
-          renderArrowPrev={(clickHandler) => (
-            <FaChevronCircleLeft
-              className={cx('arrow')}
-              onClick={clickHandler}
+  useEffect(() => {
+    if (!testimonials || testimonials.length < 2) return;
+
+    const shuffled = [...testimonials].sort(() => 0.5 - Math.random());
+    setSelected(shuffled.slice(0, 2));
+  }, [testimonials]);
+
+  if (selected.length < 2) return null;
+
+  return (
+    <div className={cx('container')}>
+      <div className={cx('testimonials-grid')}>
+        {selected.map((testimonial, index) => (
+          <TestimonialItem
+            key={index}
+            author={testimonial?.testimonialFields?.testimonialAuthor}
+            image={testimonial?.featuredImage?.node}
+            company={testimonial?.testimonialFields?.company}
+            jobTitle={testimonial?.testimonialFields?.jobTitle}
+          >
+            <div
+              className={cx('slide-content')}
+              dangerouslySetInnerHTML={{
+                __html: testimonial?.testimonialFields?.testimonialContent,
+              }}
             />
-          )}
-          renderArrowNext={(clickHandler) => (
-            <FaChevronCircleRight
-              className={cx('arrow')}
-              onClick={clickHandler}
-            />
-          )}
-          infiniteLoop={true}
-          showStatus={false}
-        >
-          {testimonials.map((testimonial, index) => (
-            <TestimonialItem
-              author={testimonial?.testimonialFields?.testimonialAuthor}
-              key={index}
-            >
-              <div
-                className={cx('slide-content')}
-                dangerouslySetInnerHTML={{
-                  __html: testimonial?.testimonialFields?.testimonialContent,
-                }}
-              />
-            </TestimonialItem>
-          ))}
-        </Carousel>
+          </TestimonialItem>
+        ))}
       </div>
-    </>
+    </div>
   );
 }
 
 Testimonials.fragments = {
   entry: gql`
     fragment TestimonialsFragment on Testimonial {
+      featuredImage {
+        node {
+          sourceUrl
+          altText
+          mediaDetails {
+            width
+            height
+          }
+        }
+      }
       testimonialFields {
         testimonialContent
         testimonialAuthor
+        company
+        jobTitle
       }
     }
   `,

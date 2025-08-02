@@ -18,7 +18,6 @@ import {
   HomepageCampusLife,
   HomepageIntro,
   HomepageNonprofit,
-  HomepageTestimonials,
   HomepageTicker,
   HomepageAdvancing,
   HomepageAttainableHousing,
@@ -77,12 +76,7 @@ export default function Component() {
 
           <HomepageAdvancing />
 
-          <HomepageTestimonials />
-
           <section className={styles.testimonials}>
-            <Heading className={styles.heading} level="h2">
-              Testimonials
-            </Heading>
             <Testimonials testimonials={data?.testimonials?.nodes} />
           </section>
 
