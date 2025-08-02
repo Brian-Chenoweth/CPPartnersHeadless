@@ -26,6 +26,7 @@
     "normalize.css": "^8.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-fast-marquee": "^1.6.5",
     "react-icons": "^5.5.0",
     "react-responsive-carousel": "3.2.23",
     "sharp": "^0.33.5",

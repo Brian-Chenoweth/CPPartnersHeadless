@@ -58,31 +58,51 @@ export default function Component() {
       />
 
       <Main className={styles.home}>
+
         <EntryHeader image={mainBanner} />
+
         <div className="container">
+
           <HomepageIntro />
+
           <HomepageNonprofit />
+          
+        </div>  
+
           <HomepageTicker />
+
+        <div className="container">
+
           <HomepageCampusLife />
+
           <HomepageAdvancing />
+
           <HomepageTestimonials />
+
           <section className={styles.testimonials}>
             <Heading className={styles.heading} level="h2">
               Testimonials
             </Heading>
             <Testimonials testimonials={data?.testimonials?.nodes} />
           </section>
+
           <HomepageAttainableHousing />
+
           <HomepageEmpowering />
+
           <HomepageFoodInsecurity />
+
           <section className={styles.posts}>
             <Heading className={styles.heading} level="h2">
               News
             </Heading>
             <Posts posts={data.posts?.nodes} id="posts-list" />
           </section>
+
         </div>
+
       </Main>
+
       <Footer
         title={siteTitle}
         menuItems={footerMenu}
