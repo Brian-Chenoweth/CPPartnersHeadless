@@ -1,10 +1,9 @@
 import { gql } from '@apollo/client';
 import { useEffect, useState } from 'react';
-
 import className from 'classnames/bind';
 import TestimonialItem from '../TestimonialItem';
-
 import styles from './Testimonials.module.scss';
+
 const cx = className.bind(styles);
 
 export default function Testimonials({ testimonials }) {
