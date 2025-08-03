@@ -1,1 +1,14 @@
 @import 'styles/Variables';
+
+.content {
+    padding: 5rem 8rem;
+    background-color: #B7CDC2;
+    border: 5px solid white;
+}
+.heading h2 {
+    text-align: center;
+}
+
+.homeIntro:before {
+    height: 65%;
+}
