@@ -9,7 +9,7 @@ export default function HomepageIntro() {
         <div className={styles.box}>
           <div className={styles.heading}>
             <h2>
-              As the university's nonprofit auxiliary, Cal Poly Partners' purpose is
+              As the university&apos;s nonprofit auxiliary, Cal Poly Partners&apos; purpose is
               crystal clear: to propel Cal Poly forward.
             </h2>
           </div>
@@ -26,7 +26,7 @@ export default function HomepageIntro() {
               commitment to these principles is what sets us apart.
             </p>
             <p>
-              At Cal Poly Partners, we don&apos;t just provide services; we forge partnerships
+              At Cal Poly Partners, we don&apos;t just provide services&semi; we forge partnerships
               that shape the future. Join us in building a brighter tomorrow for Cal Poly
               and its community. Together, we can accomplish more than we ever imagined.
             </p>
