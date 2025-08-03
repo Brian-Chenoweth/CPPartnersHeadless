@@ -233,7 +233,7 @@
 .green-image-right, .white-image-left, .white-image-right, .yellow-image-left, .yellow-image-right, .bg-green, .bg-white, .bg-yellow, .bg-green-dark {
   padding: 6rem 0;
   position: relative;
-  z-index: 0;
+  // z-index: 0;
 
   &::before {
     content: '';
