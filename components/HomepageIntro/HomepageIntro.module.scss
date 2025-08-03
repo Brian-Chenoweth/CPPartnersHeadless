@@ -4,6 +4,7 @@
     padding: 5rem 8rem;
     background-color: #B7CDC2;
     border: 5px solid white;
+    position: relative;
 }
 .heading h2 {
     text-align: center;
@@ -11,4 +12,33 @@
 
 .homeIntro:before {
     height: 65%;
+}
+
+.homeIntro {
+    z-index: 9;
+}
+
+.image {
+    max-width: 160px;
+    position: absolute;
+    right: -75px;
+    bottom: -75px;
+    animation: rotation 25s infinite linear;
+}
+
+.image:hover {
+  animation-play-state: paused;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.homeIntroWrapper {
+    z-index: 9999999;
 }

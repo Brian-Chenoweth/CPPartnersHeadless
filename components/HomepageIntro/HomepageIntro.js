@@ -1,9 +1,11 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 import styles from './HomepageIntro.module.scss';
 
 export default function HomepageIntro() {
   return (
+    <div className={styles.homeIntroWrapper}>
     <section className={`bg-green ${styles.homeIntro}`}>
       <div>
         <div className={styles.box}>
@@ -35,9 +37,21 @@ export default function HomepageIntro() {
                 <a title="News">News</a>
               </Link>
             </p>
+
+          <Image
+            src="/home/moving-cal-poly-forward-text-circle.png"
+            width={160}
+            height={160}
+            alt="Green circular text logo reading 'Moving Cal Poly Forward"
+            layout="responsive"
+            className={styles.image}
+          />
+
           </div>
+
         </div>
       </div>
     </section>
+    </div>
   );
 }
