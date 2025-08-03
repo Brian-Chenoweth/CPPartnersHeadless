@@ -565,9 +565,11 @@
 
 
 
-
+.number-yellow-light,
 .number-yellow,
-.number-aqua {
+.number-aqua,
+.number-dark-green,
+.number-lime-green {
   width: 50vw;
   padding: 6rem 0;
   position: relative;
@@ -581,13 +583,6 @@
   }
 }
 
-.number-yellow::before {
-  background-color: #f2c75b;
-}
-
-.number-aqua::before {
-  background-color: #b5e3d8;
-}
 
 .number-wrap {
   width: 100vw !important;
@@ -597,4 +592,58 @@
   display: flex;
   padding: 0;
   gap: 0;
+}
+
+.number-yellow {
+  background-color: #f2c75b;
+}
+
+.number-yellow-light {
+  background-color: #f8e08e;
+}
+
+.number-aqua {
+  background-color: #b5e3d8;
+}
+
+.number-dark-green {
+  background-color: #154734;
+  p {
+    color: #f2c75b !important;
+  }
+}
+
+.number-lime-green {
+  background-color: #a4d65e;
+}
+
+.number-wrap {
+  margin: 0;
+  // padding: 1rem 2rem;
+  .countup {
+    color: #035642;
+    font-size: 7.5rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+  }
+  p {
+    color: #035642;
+    // font-size: 7.5rem;
+    font-weight: 700;
+    margin: 0;
+    font-size: 2.8rem;
+  }
+}
+
+h2.intro-text {
+  margin: 0 !important;
+}
+
+.num-wrap {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  max-width: 80%;
+  margin: 0 auto;
+  padding: 1rem 2rem;
 }
