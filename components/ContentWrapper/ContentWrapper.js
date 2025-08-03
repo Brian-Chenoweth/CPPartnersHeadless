@@ -24,7 +24,7 @@ export default function ContentWrapper({ content, className, children }) {
       return (
         <Carousel
           autoPlay
-          infiniteLoop={false}      // ❌ Don't loop back to the beginning
+          infiniteLoop={true}
           interval={3000}
           showArrows={true}
           showThumbs={false}
@@ -35,7 +35,7 @@ export default function ContentWrapper({ content, className, children }) {
           centerSlidePercentage={33}
           swipeable={true}
           emulateTouch={true}
-          transitionTime={700}      // optional: slow down transition
+          transitionTime={700}
         >
           {figures.map((fig, index) => (
             <div key={index}>{domToReact([fig])}</div>

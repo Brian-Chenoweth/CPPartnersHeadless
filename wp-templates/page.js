@@ -1,4 +1,5 @@
 import * as MENUS from 'constants/menus';
+import PageContent from 'components/PageContent'; // ⬅️ Add this at the top
 
 import { gql } from '@apollo/client';
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
@@ -48,6 +49,7 @@ export default function Component(props) {
           <EntryHeader title={title} image={featuredImage?.node} />
           <div className="container">
             <ContentWrapper content={content} />
+            {/* <PageContent html={content} /> */}
           </div>
         </>
       </Main>
