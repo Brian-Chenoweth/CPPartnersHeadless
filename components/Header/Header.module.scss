@@ -30,6 +30,11 @@
 .header-content {
   transition: transform 0.4s ease-in-out;
 
+  @media screen and (max-width: 767px) {
+    background-color: var(--color-white);
+    
+  }
+
   &.scrolled {
     transform: translateY(-76px);
   }
@@ -106,8 +111,6 @@
 
 
   :global(.menu) {
-    
-
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -160,7 +163,9 @@
   ul {
     position: absolute;
     top: 100%;
-    right: 0;
+    @media (min-width: $breakpoint-small) {
+      right: 0;
+    }
     margin: 0;
     padding: 0.5rem 0 0 0;
     background-color: #e4ece8;

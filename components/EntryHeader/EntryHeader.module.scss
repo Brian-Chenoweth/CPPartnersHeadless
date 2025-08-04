@@ -85,6 +85,12 @@
 .image {
   display: block;
   position: relative;
+  min-height: 315px;
+  figure {
+    min-height: 315px;
+    object-fit: cover;
+    img {min-height: 315px;object-fit: cover;}
+  }
 
   &:before {
     content: ' ';

@@ -28,6 +28,11 @@
     display: flex;
     justify-content: space-between;
 
+    @media screen and (max-width: 455px) {
+      flex-direction: column;
+      .contact-info {align-items: flex-start !important;}
+    }
+
     .contact-info {
       display: flex;
       flex-direction: column;
