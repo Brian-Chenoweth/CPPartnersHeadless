@@ -1,5 +1,5 @@
 import * as MENUS from 'constants/menus';
-import PageContent from 'components/PageContent'; // ⬅️ Add this at the top
+import PageContent from 'components/PageContent';
 
 import { gql } from '@apollo/client';
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
@@ -14,19 +14,18 @@ import {
   NavigationMenu,
   FeaturedImage,
   SEO,
+  Posts, // ⬅️ Add this
 } from '../components';
 
 export default function Component(props) {
-  // Loading state for previews
-  if (props.loading) {
-    return <>Loading...</>;
-  }
+  if (props.loading) return <>Loading...</>;
 
   const { title: siteTitle, description: siteDescription } =
     props?.data?.generalSettings;
   const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
-  const { title, content, featuredImage } = props?.data?.page ?? { title: '' };
+  const { title, content, featuredImage, slug } = props?.data?.page ?? {};
+  const recentPosts = props?.data?.posts?.nodes ?? [];
 
   return (
     <>
@@ -34,7 +33,7 @@ export default function Component(props) {
         title={pageTitle(
           props?.data?.generalSettings,
           title,
-          props?.data?.generalSettings?.title
+          siteTitle
         )}
         description={siteDescription}
         imageUrl={featuredImage?.node?.sourceUrl}
@@ -49,7 +48,14 @@ export default function Component(props) {
           <EntryHeader title={title} image={featuredImage?.node} />
           <div className="container">
             <ContentWrapper content={content} />
-            {/* <PageContent html={content} /> */}
+
+            {/* ✅ Render Posts ONLY on /news */}
+            {slug === 'news' && (
+              <div className="posts-listing-news-page">
+                {/* <h2>Latest News</h2> */}
+                <Posts posts={recentPosts} />
+              </div>
+            )}
           </div>
         </>
       </Main>
@@ -59,7 +65,6 @@ export default function Component(props) {
         navOneMenuItems={props?.data?.footerSecondaryMenuItems?.nodes ?? []}
         navTwoMenuItems={props?.data?.footerTertiaryMenuItems?.nodes ?? []}
       />
-
     </>
   );
 }
@@ -74,7 +79,6 @@ Component.variables = ({ databaseId }, ctx) => {
     asPreview: ctx?.asPreview,
   };
 };
-
 
 Component.query = gql`
   ${BlogInfoFragment}
@@ -91,7 +95,28 @@ Component.query = gql`
     page(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
       title
       content
+      slug
       ...FeaturedImageFragment
+    }
+    posts(first: 4) {
+      nodes {
+        id
+        title
+        uri
+        date
+        excerpt
+        ... on NodeWithContentEditor {
+          content
+        }
+        ... on NodeWithAuthor {
+          author {
+            node {
+              name
+            }
+          }
+        }
+        ...FeaturedImageFragment
+      }
     }
     generalSettings {
       ...BlogInfoFragment

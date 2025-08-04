@@ -68,10 +68,10 @@
   display: flex;
   align-items: center;
   margin: 0;
-  padding: 1.2rem;
+  padding: .5rem;
   background-color: transparent;
-  color: var(--color-white);
-  border: 0.1rem solid var(--color-white);
+  color: var(--color-primary);
+  border: 0;
   transition: color 0.3s ease, background-color 0.3s ease;
 
   &:hover,
@@ -191,7 +191,9 @@
       ul {
         border-top: 3px solid var(--color-primary) !important;
         top: 0;
-        right: 100%;
+        @media (min-width: $breakpoint-small) {
+          right: 100%;
+        }
         background-color: #e4ece8;
         min-width: 240px;
         border-top: none;

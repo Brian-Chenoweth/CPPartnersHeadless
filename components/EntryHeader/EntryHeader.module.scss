@@ -3,9 +3,10 @@
 .entry-header {
   color: var(--color-white);
     
-  @media (min-width: $breakpoint-small) {
-    margin-top: 155px;
-  }
+  // @media (min-width: $breakpoint-small) {
+  //   margin-top: 155px;
+  // }
+  margin-top: 155px;
 }
 
 .EntryHeader_image {
@@ -37,8 +38,7 @@
     font-weight: 700;
     font-size: 14.5rem;
     @media screen and (max-width: 925px) {
-      font-size: 10rem;
-      
+      font-size: 5rem;
     }
 }
 

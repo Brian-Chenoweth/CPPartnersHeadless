@@ -1,7 +1,10 @@
 @import 'styles/Variables';
 
 .content {
-    padding: 5rem 8rem;
+    padding: 2rem;
+    @media (min-width: $breakpoint-small) {
+        padding: 5rem 8rem;
+    }
     background-color: #B7CDC2;
     border: 5px solid white;
     position: relative;
@@ -21,8 +24,13 @@
 .image {
     max-width: 160px;
     position: absolute;
-    right: -75px;
-    bottom: -75px;
+    @media (min-width: $breakpoint-small) {
+        right: -75px;
+        display: block;
+        bottom: -75px;    
+    }
+    display: none;
+    
     animation: rotation 25s infinite linear;
 }
 

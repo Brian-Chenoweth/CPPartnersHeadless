@@ -44,5 +44,9 @@ padding: 6rem 0;
 
 
 .posts {
-  padding: 6rem 0;
+      padding: 4rem 0;
+    @media (min-width: $breakpoint-small) {
+      padding: 6rem 0;
+  }
+  
 }

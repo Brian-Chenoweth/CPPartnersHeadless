@@ -7,8 +7,12 @@
     h2 {
         color: var(--color-primary);
         margin: 0 !important;
-        font-size: 8rem;
-        padding: 9.5rem 0;
+        @media (min-width: $breakpoint-small) {
+            font-size: 8rem;
+            padding: 9.5rem 0;
+        }
+        font-size: 5rem;
+        padding: 5rem 0;
         text-transform: uppercase;
     }
 
