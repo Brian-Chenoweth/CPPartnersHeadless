@@ -46,9 +46,9 @@ export default function Component(props) {
         description={siteDescription}
         menuItems={primaryMenu}
       />
-      <Main>
+      <Main className="singleMain">
         <>
-          <div className="container">
+          <div className="container singleContainer">
             <h1 className="postTitle">{title}</h1>
             <Image
               src={featuredImage?.node?.sourceUrl}
@@ -59,10 +59,8 @@ export default function Component(props) {
             />
             <ContentWrapper content={content} />
           </div>
-
-          {/* ✅ Recent Posts Section */}
           <section className={`${styles.posts} container`}>
-            <h2 className={styles.heading}>Recent Posts</h2>
+            <h2 className={styles.heading}>Recent News</h2>
             <Posts posts={recentPosts} />
           </section>
         </>
@@ -119,7 +117,7 @@ Component.query = gql`
       ...FeaturedImageFragment
     }
 
-    posts(first: 3) {
+    posts(first: 4) {
       nodes {
         ...PostsItemFragment
       }
