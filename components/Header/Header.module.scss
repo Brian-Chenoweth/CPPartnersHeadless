@@ -195,9 +195,10 @@
       // 3rd-level submenu
       ul {
         border-top: 3px solid var(--color-primary) !important;
-        top: 0;
+        top: 100%;
         @media (min-width: $breakpoint-small) {
           right: 100%;
+          top: 0;
         }
         background-color: #e4ece8;
         min-width: 240px;
