@@ -241,3 +241,30 @@
 
 }
 
+
+
+
+
+@media screen and (max-width: 767px) {
+  .primary-navigation {
+    :global(.menu) {
+      height: auto;
+      li {
+        width: 100% !important;
+        ul {
+          position: relative;
+          visibility: visible;
+          opacity: 1;
+          li {
+            width: 100% !important;
+            ul {
+              position: relative;
+              visibility: visible;
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+  }
+}
