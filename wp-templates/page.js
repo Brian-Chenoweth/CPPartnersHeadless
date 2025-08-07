@@ -14,7 +14,7 @@ import {
   NavigationMenu,
   FeaturedImage,
   SEO,
-  Posts, // ⬅️ Add this
+  Posts,
 } from '../components';
 
 export default function Component(props) {
@@ -30,11 +30,7 @@ export default function Component(props) {
   return (
     <>
       <SEO
-        title={pageTitle(
-          props?.data?.generalSettings,
-          title,
-          siteTitle
-        )}
+        title={pageTitle(props?.data?.generalSettings, title, siteTitle)}
         description={siteDescription}
         imageUrl={featuredImage?.node?.sourceUrl}
       />
@@ -48,11 +44,8 @@ export default function Component(props) {
           <EntryHeader title={title} image={featuredImage?.node} />
           <div className="container">
             <ContentWrapper content={content} />
-
-            {/* ✅ Render Posts ONLY on /news */}
             {slug === 'news' && (
               <div className="posts-listing-news-page">
-                {/* <h2>Latest News</h2> */}
                 <Posts posts={recentPosts} />
               </div>
             )}
@@ -98,7 +91,7 @@ Component.query = gql`
       slug
       ...FeaturedImageFragment
     }
-    posts(first: 4) {
+    posts(first: 16) {
       nodes {
         id
         title
