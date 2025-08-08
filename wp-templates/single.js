@@ -18,7 +18,6 @@ import { BlogInfoFragment } from 'fragments/GeneralSettings';
 import styles from 'styles/pages/_Home.module.scss';
 
 export default function Component(props) {
-  // Loading state for previews
   if (props.loading) {
     return <>Loading...</>;
   }
@@ -29,6 +28,28 @@ export default function Component(props) {
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
   const { title, content, featuredImage, date, author } = props.data.post;
   const recentPosts = props?.data?.posts?.nodes ?? [];
+
+  // 🔹 Add the date formatter here
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const ordinal =
+      day % 10 === 1 && day !== 11
+        ? "st"
+        : day % 10 === 2 && day !== 12
+        ? "nd"
+        : day % 10 === 3 && day !== 13
+        ? "rd"
+        : "th";
+
+    return date
+      .toLocaleDateString("en-US", {
+        weekday: "long",
+        month: "long",
+        day: "numeric",
+      })
+      .replace(/\d+/, `${day}${ordinal}`);
+  }
 
   return (
     <>
@@ -48,21 +69,47 @@ export default function Component(props) {
       />
       <Main className="singleMain">
         <>
-          <div className="container singleContainer">
+        <div className="container singleContainer twoCol">
+          <article className="postArea">
             <h1 className="postTitle">{title}</h1>
+
             <Image
               src={featuredImage?.node?.sourceUrl}
-              width={400}
-              height={80}
-              alt="Cal Poly University logo"
+              width={1200}
+              height={675}
+              alt={featuredImage?.node?.altText || title}
               layout="responsive"
             />
+
             <ContentWrapper content={content} />
-          </div>
+          </article>
+
+          <aside className="sidebar">
+            <h2 className="sidebarHeading">Recent News</h2>
+            <ul className="recent-posts">
+              {recentPosts.map(post => {
+                return (
+                  <li key={post.id}>
+                    <div className="post-meta">
+                      <time dateTime={post.date}>
+                          {formatDate(post.date)}
+                      </time>
+                    </div>
+                    <a href={post.uri}>{post.title}</a>
+                  </li>
+                );
+              })}
+            </ul>
+          </aside>
+
+        </div>
+{/* 
           <section className={`${styles.posts} container`}>
             <h2 className={styles.heading}>Recent News</h2>
             <Posts posts={recentPosts} />
-          </section>
+          </section> */}
+
+
         </>
       </Main>
       <Footer
@@ -117,9 +164,11 @@ Component.query = gql`
       ...FeaturedImageFragment
     }
 
-    posts(first: 4) {
+    posts(first: 8) {
       nodes {
         ...PostsItemFragment
+        date
+        excerpt
       }
     }
 

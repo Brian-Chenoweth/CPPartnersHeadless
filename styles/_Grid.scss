@@ -694,3 +694,56 @@ h2.intro-text {
     grid-template-columns: repeat(2, 1fr) !important;
   }
 }
+
+
+.twoCol {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px; // content | sidebar
+  gap: 2.5rem;
+  align-items: start;
+
+  .postArea { min-width: 0; } // allow content to shrink without overflow
+  .sidebar {
+    position: sticky;
+    margin-top: 14rem;
+    top: 10rem; // keeps sidebar visible while scrolling
+
+    .recent-posts {
+      list-style-type: none;
+
+      li {
+        margin: 0 0 2rem 0;
+      }
+
+    }
+
+    .post-meta { 
+        font-size: 1.2rem;
+    }
+
+    a {
+      color: var(--color-primary);
+      font-size: 1.6rem;
+      text-transform: capitalize;
+      font-weight: 500;
+      line-height: 2rem;
+      transition: all .3s;
+      &:hover {
+        color: var(--color-secondary);
+      }
+    }
+
+  }
+
+  .sidebarHeading {
+    margin-top: 0;
+    // font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .twoCol {
+    grid-template-columns: 1fr;
+    .sidebar { position: static; margin-top: 2rem; }
+  }
+}
