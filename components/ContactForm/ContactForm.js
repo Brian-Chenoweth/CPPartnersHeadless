@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+// import { useState } from 'react';
 import { useForm, ValidationError } from '@formspree/react';
 
 import styles from './ContactForm.module.scss';
@@ -9,8 +9,8 @@ export default function ContactForm() {
   const [state, formspreeSubmit] = useForm('mvgqybaq');
 
   const handleSubmit = (e) => {
-    setConfirmError('');
-    const form = e.currentTarget;
+    // setConfirmError('');
+    // const form = e.currentTarget;
     formspreeSubmit(e);
   };
 
