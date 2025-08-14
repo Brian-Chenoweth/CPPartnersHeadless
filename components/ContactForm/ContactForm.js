@@ -7,14 +7,10 @@ import styles from './ContactForm.module.scss';
 
 export default function ContactForm() {
   const [state, formspreeSubmit] = useForm('mvgqybaq');
-  const [confirmError, setConfirmError] = useState('');
 
   const handleSubmit = (e) => {
     setConfirmError('');
     const form = e.currentTarget;
-    const email = form.email.value.trim();
-
-    // Let Formspree handle the actual POST
     formspreeSubmit(e);
   };
 
