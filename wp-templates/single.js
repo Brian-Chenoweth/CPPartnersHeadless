@@ -26,27 +26,37 @@ export default function Component(props) {
     props?.data?.generalSettings;
   const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
-  const { title, content, featuredImage, date, author } = props.data.post;
+
+  // Destructure post, alias core WP author, and grab ACF group
+  const {
+    title,
+    content,
+    featuredImage,
+    date,
+    author: wpAuthor,
+    postsFields,
+  } = props.data.post;
+
   const recentPosts = props?.data?.posts?.nodes ?? [];
 
-  // 🔹 Add the date formatter here
+  // 🔹 Date formatter
   function formatDate(dateString) {
     const date = new Date(dateString);
     const day = date.getDate();
     const ordinal =
       day % 10 === 1 && day !== 11
-        ? "st"
+        ? 'st'
         : day % 10 === 2 && day !== 12
-        ? "nd"
+        ? 'nd'
         : day % 10 === 3 && day !== 13
-        ? "rd"
-        : "th";
+        ? 'rd'
+        : 'th';
 
     return date
-      .toLocaleDateString("en-US", {
-        weekday: "long",
-        month: "long",
-        day: "numeric",
+      .toLocaleDateString('en-US', {
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric',
       })
       .replace(/\d+/, `${day}${ordinal}`);
   }
@@ -69,47 +79,100 @@ export default function Component(props) {
       />
       <Main className="singleMain">
         <>
-        <div className="container singleContainer twoCol">
-          <article className="postArea">
-            <h1 className="postTitle">{title}</h1>
+          <div className="container singleContainer twoCol">
+            <article className="postArea">
+              <h1 className="postTitle">{title}</h1>
 
-            <Image
-              src={featuredImage?.node?.sourceUrl}
-              width={1200}
-              height={675}
-              alt={featuredImage?.node?.altText || title}
-              layout="responsive"
-            />
+              <div className="postAttribution">
+                {/* External publication */}
+                {postsFields?.publication && (
+                  <p>
+                    <em>Originally published in</em>{" "}
+                    <strong>{postsFields.publication}</strong>
+                  </p>
+                )}
 
-            <ContentWrapper content={content} />
-          </article>
+                <p>
+                  {/* External author */}
+                  {postsFields?.author && <>By {postsFields.author}</>}
 
-          <aside className="sidebar">
-            <h2 className="sidebarHeading">Recent News</h2>
-            <ul className="recent-posts">
-              {recentPosts.map(post => {
-                return (
-                  <li key={post.id}>
-                    <div className="post-meta">
-                      <time dateTime={post.date}>
-                          {formatDate(post.date)}
-                      </time>
-                    </div>
-                    <a href={post.uri}>{post.title}</a>
-                  </li>
-                );
-              })}
-            </ul>
-          </aside>
+                  {/* If publication exists but no custom author, fallback to WP author */}
+                  {wpAuthor?.node?.name && !postsFields?.author && postsFields?.publication && (
+                    <>By {wpAuthor.node.name}</>
+                  )}
 
-        </div>
-{/* 
+                  {/* Internal fallback — no external publication */}
+                  {!postsFields?.publication && !postsFields?.author && (
+                    <>By Cal Poly Partners</>
+                  )}
+
+                  {/* Date handling — prefer custom field, fallback to WP date */}
+                  {/* Date handling — prefer custom field, fallback to WP date */}
+                  {(postsFields?.datePublished || date) && (
+                    <> • {formatDate(postsFields?.datePublished || date)}</>
+                  )}
+
+                </p>
+
+                {/* Show source link only if external publication */}
+                {postsFields?.link && postsFields?.publication && (
+                  <p>
+                    <a href={postsFields.link} target="_blank" rel="noopener noreferrer">
+                      View Original Source
+                    </a>
+                  </p>
+                )}
+              </div>
+
+
+
+
+
+              {featuredImage?.node?.sourceUrl && (
+                <Image
+                  src={featuredImage?.node?.sourceUrl}
+                  width={1200}
+                  height={675}
+                  alt={featuredImage?.node?.altText || title}
+                  layout="responsive"
+                />
+              )}
+
+              <ContentWrapper content={content} />
+
+
+            </article>
+
+            <aside className="sidebar">
+              <h2 className="sidebarHeading">Recent News</h2>
+              <ul className="recent-posts">
+                {recentPosts.map((post) => {
+                  return (
+                    <li key={post.id}>
+                      <div className="post-meta">
+                        {post.date && (
+                          <time dateTime={post.date}>
+                            {formatDate(post.date)}
+                          </time>
+                        )}
+                        {/* Example if you want to surface ACF data in sidebar too */}
+                        {post.postsFields?.publication && (
+                          <span> · {post.postsFields.publication}</span>
+                        )}
+                      </div>
+                      <a href={post.uri}>{post.title}</a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </aside>
+          </div>
+          {/*
           <section className={`${styles.posts} container`}>
             <h2 className={styles.heading}>Recent News</h2>
             <Posts posts={recentPosts} />
-          </section> */}
-
-
+          </section>
+          */}
         </>
       </Main>
       <Footer
@@ -161,6 +224,12 @@ Component.query = gql`
           }
         }
       }
+      postsFields {
+        publication
+        datePublished
+        author
+        link
+      }
       ...FeaturedImageFragment
     }
 
@@ -169,6 +238,14 @@ Component.query = gql`
         ...PostsItemFragment
         date
         excerpt
+        uri
+        id
+        postsFields {
+          publication
+          datePublished
+          author
+          link
+        }
       }
     }
 
