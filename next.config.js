@@ -25,6 +25,11 @@ module.exports = withFaust({
         destination: '/:slug',
         permanent: true,
       },
+      {
+        source: '/wp-content/uploads/2024/05/PTRS_logo_rev.png',
+        destination: 'https://cms.calpolypartners.org/wp-content/uploads/2023/08/logo_rev.png',
+        permanent: true,
+      },
     ];
   },
 });
