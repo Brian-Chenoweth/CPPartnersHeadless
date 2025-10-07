@@ -30,6 +30,11 @@ module.exports = withFaust({
         destination: 'https://cms.calpolypartners.org/wp-content/uploads/2023/08/logo_rev.png',
         permanent: true,
       },
+      {
+        source: '/wp-content/uploads/2023/08/logo_grn.png',
+        destination: 'https://cms.calpolypartners.org/wp-content/uploads/2025/10/logo_grn.png',
+        permanent: true,
+      },
     ];
   },
 });
