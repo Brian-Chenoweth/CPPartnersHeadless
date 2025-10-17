@@ -1,3 +1,4 @@
+// pages/search.js
 import * as MENUS from 'constants/menus';
 
 import { gql, useQuery } from '@apollo/client';
@@ -6,11 +7,11 @@ import {
   Button,
   Header,
   Main,
+  Footer,
   NavigationMenu,
   SearchInput,
   SearchResults,
   SEO,
-  SearchRecommendations,
 } from 'components';
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
 import { useState } from 'react';
@@ -21,14 +22,9 @@ import appConfig from 'app.config';
 export default function Page() {
   const [searchQuery, setSearchQuery] = useState('');
 
-  const { data: pageData } = useQuery(Page.query, {
+  const { data: pageData, loading: pageLoading } = useQuery(Page.query, {
     variables: Page.variables(),
   });
-
-  const { title: siteTitle, description: siteDescription } =
-    pageData.generalSettings;
-  const primaryMenu = pageData.headerMenuItems.nodes ?? [];
-  const categories = pageData.categories.nodes;
 
   const {
     data: searchResultsData,
@@ -45,6 +41,21 @@ export default function Page() {
     fetchPolicy: 'network-only',
   });
 
+  if (pageLoading || !pageData) return null;
+
+  const { title: siteTitle, description: siteDescription } =
+    pageData?.generalSettings ?? {};
+
+  const primaryMenu = pageData?.headerMenuItems?.nodes ?? [];
+  const footerMenu = pageData?.footerMenuItems?.nodes ?? [];
+  const navOneMenuItems = pageData?.footerSecondaryMenuItems?.nodes ?? [];
+
+  // Prefer tertiary-by-location; fall back to tertiary-by-name if empty
+  const quickLinksMenuItems =
+    (pageData?.footerTertiaryMenuItems?.nodes?.length
+      ? pageData.footerTertiaryMenuItems.nodes
+      : pageData?.footerTertiaryByName?.menuItems?.nodes) ?? [];
+
   return (
     <>
       <SEO title={siteTitle} description={siteDescription} />
@@ -58,11 +69,11 @@ export default function Page() {
       <Main>
         <div className={styles['search-header-pane']}>
           <div className="container small">
-            <h2 className={styles['search-header-text']}>
+            <h1 className={styles['search-header-text']}>
               {searchQuery && !searchResultsLoading
                 ? `Showing results for "${searchQuery}"`
                 : `Search`}
-            </h2>
+            </h1>
             <SearchInput
               value={searchQuery}
               onChange={(newValue) => setSearchQuery(newValue)}
@@ -100,12 +111,15 @@ export default function Page() {
               </Button>
             </div>
           )}
-
-          {!searchResultsLoading && searchResultsData === undefined && (
-            <SearchRecommendations categories={categories} />
-          )}
         </div>
       </Main>
+
+      <Footer
+        title={siteTitle}
+        menuItems={footerMenu}
+        navOneMenuItems={navOneMenuItems}
+        quickLinksMenuItems={quickLinksMenuItems}
+      />
     </>
   );
 }
@@ -114,6 +128,10 @@ Page.variables = () => {
   return {
     headerLocation: MENUS.PRIMARY_LOCATION,
     footerLocation: MENUS.FOOTER_LOCATION,
+    footerSecondaryLocation: MENUS.FOOTER_SECONDARY_LOCATION,
+    footerTertiaryLocation: MENUS.FOOTER_TERTIARY_LOCATION,
+    // Change ONLY if your Quick Links menu has a different name in WP Admin → Menus
+    footerTertiaryMenuName: 'Quick Links',
   };
 };
 
@@ -123,25 +141,57 @@ Page.query = gql`
   query GetPageData(
     $headerLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
+    $footerSecondaryLocation: MenuLocationEnum
+    $footerTertiaryLocation: MenuLocationEnum
+    $footerTertiaryMenuName: ID!
   ) {
     generalSettings {
       ...BlogInfoFragment
     }
-    headerMenuItems: menuItems(where: { location: $headerLocation }, first: 100) {
+
+    headerMenuItems: menuItems(
+      where: { location: $headerLocation }
+      first: 100
+    ) {
       nodes {
         ...NavigationMenuItemFragment
       }
     }
-    footerMenuItems: menuItems(where: { location: $footerLocation }) {
+
+    footerMenuItems: menuItems(
+      where: { location: $footerLocation }
+      first: 100
+    ) {
       nodes {
         ...NavigationMenuItemFragment
       }
     }
-    categories {
+
+    footerSecondaryMenuItems: menuItems(
+      where: { location: $footerSecondaryLocation }
+      first: 100
+    ) {
       nodes {
-        databaseId
-        uri
-        name
+        ...NavigationMenuItemFragment
+      }
+    }
+
+    # Tertiary by LOCATION (preferred)
+    footerTertiaryMenuItems: menuItems(
+      where: { location: $footerTertiaryLocation }
+      first: 100
+    ) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
+    }
+
+    # Tertiary by NAME (failsafe if location isn’t wired/assigned)
+    footerTertiaryByName: menu(id: $footerTertiaryMenuName, idType: NAME) {
+      menuItems(first: 100) {
+        nodes {
+          ...NavigationMenuItemFragment
+        }
       }
     }
   }

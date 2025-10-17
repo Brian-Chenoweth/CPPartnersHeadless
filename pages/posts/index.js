@@ -53,11 +53,11 @@ export default function Page() {
       </Main>
 
       <Footer
-  title={siteTitle}
-  menuItems={footerMenu}
-  navOneMenuItems={data?.footerSecondaryMenuItems?.nodes ?? []}
-  quickLinksMenuItems={data?.footerTertiaryMenuItems?.nodes ?? []}
-/>
+        title={siteTitle}
+        menuItems={footerMenu}
+        navOneMenuItems={data?.footerSecondaryMenuItems?.nodes ?? []}
+        quickLinksMenuItems={data?.footerTertiaryMenuItems?.nodes ?? []}
+      />
     </>
   );
 }
