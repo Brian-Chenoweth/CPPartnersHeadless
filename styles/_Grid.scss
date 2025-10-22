@@ -731,6 +731,18 @@ h2.intro-text {
     }
   }
 
+  .featuredImage {
+    // &.hasCaption {
+
+    // }
+    figcaption {
+      p {
+        font-size: 1.75rem;
+          color: #555;
+      }
+    }
+  }
+
 
 
   .sidebar {

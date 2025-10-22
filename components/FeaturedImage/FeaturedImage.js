@@ -65,6 +65,7 @@ FeaturedImage.fragments = {
           id
           sourceUrl
           altText
+          caption
           mediaDetails {
             width
             height

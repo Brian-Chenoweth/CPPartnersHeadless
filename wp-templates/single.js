@@ -126,7 +126,7 @@ export default function Component(props) {
 
 
 
-
+{/* 
 
               {featuredImage?.node?.sourceUrl && (
                 <Image
@@ -136,7 +136,30 @@ export default function Component(props) {
                   alt={featuredImage?.node?.altText || title}
                   layout="responsive"
                 />
+              )} */}
+
+              {featuredImage?.node?.sourceUrl && (
+                <figure
+                  className={`featuredImage${
+                    featuredImage?.node?.caption ? ' hasCaption' : ''
+                  }`}
+                >
+                  <Image
+                    src={featuredImage.node.sourceUrl}
+                    width={1200}
+                    height={675}
+                    alt={featuredImage.node.altText || title}
+                    layout="responsive"
+                  />
+                  {featuredImage?.node?.caption && (
+                    <figcaption
+                      className="featuredImage__caption"
+                      dangerouslySetInnerHTML={{ __html: featuredImage.node.caption }}
+                    />
+                  )}
+                </figure>
               )}
+
 
               <ContentWrapper content={content} />
 
