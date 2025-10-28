@@ -71,7 +71,7 @@ export default function Page() {
           <div className="container small">
 
             <h1 style={{ color: '#fff', margin: '10rem 0 2rem 0!important', fontSize: '7rem!important;' }}>404: This page could not be found</h1>
-            <p style={{ color: '#fff', margin: '2rem 0 2rem 0!important', fontSize: '3rem!important;' }}>You may find what you're looking for by searching below.</p>
+            <p style={{ color: '#fff', margin: '2rem 0 2rem 0!important', fontSize: '3rem!important;' }}>You may find what you&apos;re looking for by searching below.</p>
 
             <h2 style={{ color: '#fff', margin: '5rem 0 1rem 0!important' }}>
               {searchQuery && !searchResultsLoading
