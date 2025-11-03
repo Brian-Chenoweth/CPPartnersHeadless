@@ -89,7 +89,11 @@
   figure {
     min-height: 315px;
     object-fit: cover;
-    img {min-height: 315px;object-fit: cover;}
+    img {
+      min-height: 315px;
+      object-fit: cover;
+      object-position: center;
+    }
   }
 
   &:before {
