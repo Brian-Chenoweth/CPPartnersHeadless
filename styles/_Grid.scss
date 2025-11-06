@@ -557,7 +557,7 @@
 }
 
 .carousel figure {
-  padding: 0 2rem;
+  padding: 0;
 }
 
 .carousel .slide {
@@ -570,6 +570,31 @@
   transform: scale(1.1);   // Make center slide larger
   opacity: 1;              // Full opacity for center
   z-index: 2;              // Bring it above other slides
+}
+
+.carousel .slide div {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  height: 100%; // ensures full container alignment
+}
+
+.carousel .slide figure {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel .slide img {
+  display: block;
+  margin: 0 auto;
+  max-height: 120px; // optional, keeps logos uniform
+  object-fit: contain;
+}
+
+.carousel {
+  padding-bottom: 8rem;
 }
 
 
