@@ -1,8 +1,5 @@
 const { withFaust, getWpHostname } = require('@faustwp/core');
 
-/**
- * @type {import('next').NextConfig}
- **/
 module.exports = withFaust({
   reactStrictMode: true,
   sassOptions: {
@@ -10,9 +7,10 @@ module.exports = withFaust({
   },
   images: {
     domains: [
-      getWpHostname(),             
+      getWpHostname(),
       'cms.calpolypartners.org',
     ],
+    minimumCacheTTL: 60 * 60 * 24 * 365, // 1 year
   },
   i18n: {
     locales: ['en'],
@@ -43,9 +41,8 @@ module.exports = withFaust({
 
   async headers() {
     return [
-      // Cache optimized images aggressively
       {
-        source: '/_next/image(.*)',
+        source: '/_next/image',
         headers: [
           {
             key: 'Cache-Control',
@@ -53,9 +50,8 @@ module.exports = withFaust({
           },
         ],
       },
-      // Cache other Next static assets aggressively too (JS, CSS, etc.)
       {
-        source: '/_next/static/(.*)',
+        source: '/_next/static/:path*',
         headers: [
           {
             key: 'Cache-Control',
