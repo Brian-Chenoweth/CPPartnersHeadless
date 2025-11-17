@@ -53,6 +53,7 @@ function Posts({ posts, intro, id }) {
                       height={340}
                       sizes="(max-width: 768px) 70vw, 340px"
                       priority={i < appConfig.postsAboveTheFold}
+                      quality={50}
                     />
                   </a>
                 </Link>
