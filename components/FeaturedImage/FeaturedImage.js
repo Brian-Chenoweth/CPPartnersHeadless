@@ -54,7 +54,7 @@ export default function FeaturedImage({
           alt={altText}
           sizes={resolvedSizes}
           priority={priority}
-          quality={quality ?? (isHome ? 80 : 70)}
+          quality={quality ?? (isHome ? 80 : 60)}
           style={{ objectFit: 'cover', width: '100%', height: 'auto' }}
           {...props}
         />

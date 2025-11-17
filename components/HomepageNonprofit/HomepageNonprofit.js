@@ -25,7 +25,7 @@ export default function HomepageNonprofit() {
             width={980}
             height={630}
             alt="Cal Poly students in hairnets and gloves packaging chocolate bars on trays in a food production lab."
-            sizes="(max-width: 768px) 70vw, 50vw"
+            sizes="(max-width: 768px) 70vw, (max-width: 1200px) 50vw, 30vw"
             quality={70}
             style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
           />
