@@ -49,7 +49,7 @@ Testimonials.fragments = {
     fragment TestimonialsFragment on Testimonial {
       featuredImage {
         node {
-          sourceUrl
+          sourceUrl(size: THUMBNAIL)
           altText
           mediaDetails {
             width
