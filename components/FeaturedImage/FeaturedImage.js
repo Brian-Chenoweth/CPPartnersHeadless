@@ -11,6 +11,7 @@ export default function FeaturedImage({
   height,
   sizes,
   priority = false,
+  quality,
   ...props
 }) {
   const router = useRouter();
@@ -46,16 +47,17 @@ export default function FeaturedImage({
 
   return src && resolvedWidth && resolvedHeight ? (
     <figure className={combinedClassName}>
-      <Image
-        src={src}
-        width={resolvedWidth}
-        height={resolvedHeight}
-        alt={altText}
-        sizes={resolvedSizes}
-        priority={priority}
-        style={{ objectFit: 'cover', width: '100%', height: 'auto' }}
-        {...props}
-      />
+        <Image
+          src={src}
+          width={resolvedWidth}
+          height={resolvedHeight}
+          alt={altText}
+          sizes={resolvedSizes}
+          priority={priority}
+          quality={quality ?? (isHome ? 80 : 70)}
+          style={{ objectFit: 'cover', width: '100%', height: 'auto' }}
+          {...props}
+        />
     </figure>
   ) : null;
 }

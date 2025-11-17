@@ -24,9 +24,10 @@ export default function HomepageCampusLife() {
             width={980}
             height={630}
             alt="Students sitting under umbrellas at outdoor tables near a colorful mural on a sunny campus patio."
-            sizes="(max-width: 768px) 100vw, 50vw"
+            sizes="(max-width: 768px) 90vw, 50vw"
             style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
             priority={false}
+            quality={70}
           />
         </figure>
       </div>
