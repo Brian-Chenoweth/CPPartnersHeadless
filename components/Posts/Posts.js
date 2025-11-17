@@ -51,6 +51,7 @@ function Posts({ posts, intro, id }) {
                       image={image}
                       width={340}
                       height={340}
+                      sizes="(max-width: 768px) 100vw, 340px"
                       priority={i < appConfig.postsAboveTheFold}
                     />
                   </a>
@@ -63,11 +64,6 @@ function Posts({ posts, intro, id }) {
                     </a>
                   </Link>
                 </Heading>
-                {/* <PostInfo
-                  className={cx('info')}
-                  author={post?.author?.node?.name}
-                  date={post?.date}
-                /> */}
               </div>
             </div>
           );
