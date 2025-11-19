@@ -35,7 +35,7 @@ export default function FeaturedImage({
     sizes ||
     (isHome
       ? '(max-width: 768px) 100vw, 1200px'
-      : '(max-width: 768px) 100vw, 340px');
+      : '(max-width: 768px) 100vw, 1200px');
 
   const combinedClassName = [
     styles['featured-image'],
@@ -68,7 +68,7 @@ FeaturedImage.fragments = {
       featuredImage {
         node {
           id
-          sourceUrl(size: MEDIUM_LARGE)
+          sourceUrl
           altText
           caption
           mediaDetails {
