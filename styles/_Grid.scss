@@ -600,6 +600,18 @@
   padding-bottom: 8rem;
 }
 
+/* Force arrows to show on mobile */
+.carousel .control-arrow {
+  opacity: 1 !important;
+  display: block !important;
+}
+
+.carousel .control-prev.control-arrow,
+.carousel .control-next.control-arrow {
+  visibility: visible !important;
+}
+
+
 
 
 .is-type-video.centered {
