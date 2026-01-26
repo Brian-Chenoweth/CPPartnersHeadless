@@ -45,7 +45,8 @@ export default function Component(props) {
     props?.data?.generalSettings;
   const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
-  const { title, content, featuredImage, slug } = props?.data?.page ?? {};
+  const { title, content, featuredImage, slug, seoControls } = props?.data?.page ?? {};
+  const noindex = !!seoControls?.disableIndexing;
   const recentPosts = props?.data?.posts?.nodes ?? [];
 
   // Replace the marker with a stable placeholder DIV for SSR
@@ -57,13 +58,14 @@ export default function Component(props) {
         title={pageTitle(props?.data?.generalSettings, title, siteTitle)}
         description={siteDescription}
         imageUrl={featuredImage?.node?.sourceUrl}
+        noindex={noindex}
       />
       <Header
         title={siteTitle}
         description={siteDescription}
         menuItems={primaryMenu}
       />
-      <Main>
+      <Main className={`page page-${slug || 'unknown'}`}>
         <>
           <EntryHeader title={title} image={featuredImage?.node} />
           <div className="container">
@@ -115,6 +117,9 @@ Component.query = gql`
       title
       content
       slug
+      seoControls {
+        disableIndexing
+      }
       ...FeaturedImageFragment
     }
     posts(first: 16) {

@@ -903,3 +903,12 @@ article form {
   }
 
 }
+
+
+
+// Page specific styles
+.page-tech-park-self-guided-tour-stops {
+  article[class*="ContentWrapper_content"] {
+    padding: 10rem 0;
+  }
+}
