@@ -39,10 +39,10 @@ export default function HomepageIntro() {
             </p>
 
           <Image
-            src="/home/moving-cal-poly-forward-85.png"
+            src="/home/partnership-85.png"
             width={160}
             height={160}
-            alt="Green circular text logo reading 'Moving Cal Poly Forward"
+            alt="Green circular text logo reading 85 years of partnership"
             layout="responsive"
             className={styles.image}
           />
