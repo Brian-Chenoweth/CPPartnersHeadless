@@ -20,6 +20,11 @@ export default function MyApp({ Component, pageProps }) {
           page_path: url,
         });
       }
+
+      // Ensure we land at top on route changes unless there's an anchor hash.
+      if (typeof window !== 'undefined' && !window.location.hash) {
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+      }
     };
 
     router.events.on('routeChangeComplete', handleRouteChange);

@@ -52,6 +52,13 @@ export default function Component(props) {
   // Replace the marker with a stable placeholder DIV for SSR
   const htmlWithSlot = (content ?? '').split(TOKEN).join(SLOT_HTML);
 
+  // Prevent unexpected scroll jumps on the news page when arriving via link.
+  useEffect(() => {
+    if (slug === 'news' && typeof window !== 'undefined' && !window.location.hash) {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    }
+  }, [slug]);
+
   return (
     <>
       <SEO
