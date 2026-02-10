@@ -1,4 +1,5 @@
 import className from 'classnames/bind';
+import Image from 'next/image';
 import { FeaturedImage, Heading, PostInfo } from 'components';
 import { useRouter } from 'next/router';
 
@@ -34,6 +35,16 @@ export default function EntryHeader({ title, image, date, author, className }) {
             <Heading className={cx('heading-home')} level="h1">
               Shaping<br />Tomorrow,<br />Together
             </Heading>
+          )}
+
+          {isHome && (
+            <Image
+              src="/static/cpp-85-years.png"
+              width={450}
+              height={450}
+              alt="Cal Poly Partners 85 years anniversary mark"
+              className={cx('anniversary')}
+            />
           )}
 
             <FeaturedImage

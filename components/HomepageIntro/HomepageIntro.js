@@ -39,7 +39,7 @@ export default function HomepageIntro() {
             </p>
 
           <Image
-            src="/home/moving-cal-poly-forward-text-circle.png"
+            src="/home/moving-cal-poly-forward-85.png"
             width={160}
             height={160}
             alt="Green circular text logo reading 'Moving Cal Poly Forward"
