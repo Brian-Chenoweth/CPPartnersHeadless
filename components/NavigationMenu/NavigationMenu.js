@@ -1,7 +1,20 @@
+import { forwardRef } from 'react';
 import { gql } from '@apollo/client';
 import Link from 'next/link';
+import { FaChevronDown } from 'react-icons/fa';
 
-export default function NavigationMenu({ menuItems, className, children }) {
+const NavigationMenu = forwardRef(function NavigationMenu(
+  {
+    menuItems,
+    className,
+    children,
+    id,
+    onNavigate,
+    expandedItems = [],
+    onToggleItem,
+  },
+  ref
+) {
   if (!menuItems) {
     return null;
   }
@@ -26,16 +39,44 @@ export default function NavigationMenu({ menuItems, className, children }) {
     return roots;
   };
 
-  const renderMenuItems = (items) => {
+  const renderMenuItems = (items, depth = 0) => {
     return items.map((item) => {
       const hasChildren = item.children?.length > 0;
+      const isExpanded = expandedItems.includes(item.id);
+      const submenuId = `submenu-${item.id}`;
+
       return (
         <li
           key={item.id ?? ''}
-          className={hasChildren ? 'hasChildren' : undefined}
+          className={[
+            hasChildren ? 'hasChildren' : '',
+            isExpanded ? 'expanded' : '',
+          ]
+            .filter(Boolean)
+            .join(' ')}
         >
-          <Link href={item.path ?? ''}>{item.label ?? ''}</Link>
-          {hasChildren && <ul>{renderMenuItems(item.children)}</ul>}
+          <div className="menu-link-row">
+            <Link href={item.path ?? ''} onClick={onNavigate}>
+              {item.label ?? ''}
+            </Link>
+            {hasChildren && (
+              <button
+                type="button"
+                className="submenu-toggle"
+                aria-expanded={isExpanded}
+                aria-controls={submenuId}
+                aria-label={`Toggle ${item.label ?? 'submenu'} submenu`}
+                onClick={() => onToggleItem?.(item.id)}
+              >
+                <FaChevronDown aria-hidden="true" />
+              </button>
+            )}
+          </div>
+          {hasChildren && (
+            <ul id={submenuId} data-depth={depth + 1}>
+              {renderMenuItems(item.children, depth + 1)}
+            </ul>
+          )}
         </li>
       );
     });
@@ -45,6 +86,8 @@ export default function NavigationMenu({ menuItems, className, children }) {
 
   return (
     <nav
+      id={id}
+      ref={ref}
       className={className}
       role="navigation"
       aria-label={`${menuItems[0]?.menu?.node?.name ?? 'Main'} menu`}
@@ -55,7 +98,7 @@ export default function NavigationMenu({ menuItems, className, children }) {
       </ul>
     </nav>
   );
-}
+});
 
 NavigationMenu.fragments = {
   entry: gql`
@@ -73,3 +116,5 @@ NavigationMenu.fragments = {
     }
   `,
 };
+
+export default NavigationMenu;

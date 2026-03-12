@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames/bind';
-import { FaBars, FaSearch } from 'react-icons/fa';
+import { FaBars, FaSearch, FaTimes } from 'react-icons/fa';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import { NavigationMenu, SkipNavigationLink } from '../';
 
@@ -12,7 +13,9 @@ let cx = classNames.bind(styles);
 export default function Header({ className, menuItems }) {
   const [isNavShown, setIsNavShown] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [expandedItems, setExpandedItems] = useState([]);
   const menuRef = useRef(null);
+  const router = useRouter();
 
   // Classes with scroll-aware styles
   const headerClasses = cx('header', className, { scrolled: isScrolled });
@@ -26,6 +29,31 @@ export default function Header({ className, menuItems }) {
     isNavShown ? cx('show') : undefined
   );
 
+  const closeNavigation = () => {
+    setIsNavShown(false);
+    setExpandedItems([]);
+  };
+
+  const toggleNavigation = () => {
+    setIsNavShown((current) => {
+      const next = !current;
+
+      if (!next) {
+        setExpandedItems([]);
+      }
+
+      return next;
+    });
+  };
+
+  const toggleExpandedItem = (itemId) => {
+    setExpandedItems((current) =>
+      current.includes(itemId)
+        ? current.filter((id) => id !== itemId)
+        : [...current, itemId]
+    );
+  };
+
   // Handle scroll detection
   useEffect(() => {
     const handleScroll = () => {
@@ -36,9 +64,36 @@ export default function Header({ className, menuItems }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    closeNavigation();
+  }, [router.asPath]);
+
+  useEffect(() => {
+    if (!isNavShown) {
+      document.body.style.overflow = '';
+      return undefined;
+    }
+
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        closeNavigation();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isNavShown]);
+
   // Handle submenu overflow flipping
   useEffect(() => {
     const items = menuRef.current?.querySelectorAll('li') || [];
+    const cleanups = [];
 
     items.forEach((li) => {
       const submenu = li.querySelector('ul ul'); // 3rd-level menu
@@ -59,14 +114,16 @@ export default function Header({ className, menuItems }) {
 
       li.addEventListener('mouseenter', handleEnter);
       li.addEventListener('focusin', handleEnter);
-
-      // cleanup
-      return () => {
+      cleanups.push(() => {
         li.removeEventListener('mouseenter', handleEnter);
         li.removeEventListener('focusin', handleEnter);
-      };
+      });
     });
-  }, []);
+
+    return () => {
+      cleanups.forEach((cleanup) => cleanup());
+    };
+  }, [menuItems]);
 
   return (
     <header className={headerClasses}>
@@ -92,35 +149,67 @@ export default function Header({ className, menuItems }) {
 
       <div className={headerContentClasses}>
         <div className={cx('bar')}>
-          <a href="/" className={cx('titleName')}>
+          <Link href="/" className={cx('titleName')}>
             Cal Poly Partners
-          </a>
+          </Link>
+
+          <div className={cx('header-actions')}>
+            <Link legacyBehavior href="/search">
+              <a
+                className={cx('search-link')}
+                aria-label="Search the site"
+                onClick={closeNavigation}
+              >
+                <FaSearch title="Search" role="img" />
+              </a>
+            </Link>
+
+            <button
+              type="button"
+              className={cx('nav-toggle')}
+              onClick={toggleNavigation}
+              aria-label={isNavShown ? 'Close navigation' : 'Open navigation'}
+              aria-controls="primary-navigation"
+              aria-expanded={isNavShown}
+            >
+              {isNavShown ? <FaTimes /> : <FaBars />}
+            </button>
+          </div>
 
           <button
             type="button"
-            className={cx('nav-toggle')}
-            onClick={() => setIsNavShown(!isNavShown)}
-            aria-label="Toggle navigation"
-            aria-controls={cx('primary-navigation')}
-            aria-expanded={isNavShown}
-          >
-            <FaBars />
-          </button>
+            className={cx('nav-backdrop', { show: isNavShown })}
+            aria-label="Close navigation"
+            tabIndex={isNavShown ? 0 : -1}
+            onClick={closeNavigation}
+          />
 
           <NavigationMenu
-            id={cx('primary-navigation')}
+            id="primary-navigation"
             className={navClasses}
             menuItems={menuItems}
             ref={menuRef}
+            onNavigate={closeNavigation}
+            expandedItems={expandedItems}
+            onToggleItem={toggleExpandedItem}
           >
-            <li>
-              <Link legacyBehavior href="/search">
-                <a>
-                  <FaSearch title="Search" role="img" />
-                </a>
+            <li className="mobile-search-link">
+              <Link href="/search" onClick={closeNavigation}>
+                Search
               </Link>
             </li>
           </NavigationMenu>
+
+          {isNavShown ? (
+            <button
+              type="button"
+              className={cx('mobile-close')}
+              aria-label="Close navigation"
+              onClick={closeNavigation}
+            >
+              <FaTimes aria-hidden="true" />
+            </button>
+          ) : null}
         </div>
       </div>
     </header>
