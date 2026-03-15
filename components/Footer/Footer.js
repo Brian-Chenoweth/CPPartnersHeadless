@@ -37,9 +37,9 @@ export default function Footer({
           </div>
 
           <div className={cx('contact-info')}>
-            <a href="/" className={cx('cppText')}>
+            <Link href="/" className={cx('cppText')}>
               {title ?? 'Cal Poly Partners'}
-            </a>
+            </Link>
             <a href="tel:8057561451" className={cx('phone')}>
               (805) 756-1451
             </a>
@@ -167,11 +167,10 @@ export default function Footer({
           <NavigationMenu className={cx('nav')} menuItems={navTwoMenuItems} />
         </div>
 
-        <div className={cx('copyright')}>
+      <div className={cx('copyright')}>
           &copy; {new Date().getFullYear()} {siteTitle ?? 'Cal Poly Partners'}
         </div>
       </div>
-      {console.log(menuItems, navOneMenuItems, navTwoMenuItems)}
     </footer>
   );
 }

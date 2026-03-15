@@ -44,6 +44,10 @@ const NavigationMenu = forwardRef(function NavigationMenu(
       const hasChildren = item.children?.length > 0;
       const isExpanded = expandedItems.includes(item.id);
       const submenuId = `submenu-${item.id}`;
+      const href = item.path ?? '';
+      const target = item.target || undefined;
+      const rel = target === '_blank' ? 'noopener noreferrer' : undefined;
+      const isExternalLink = /^(https?:|mailto:|tel:|\/\/)/i.test(href);
 
       return (
         <li
@@ -56,9 +60,15 @@ const NavigationMenu = forwardRef(function NavigationMenu(
             .join(' ')}
         >
           <div className="menu-link-row">
-            <Link href={item.path ?? ''} onClick={onNavigate}>
-              {item.label ?? ''}
-            </Link>
+            {isExternalLink || target ? (
+              <a href={href} target={target} rel={rel} onClick={onNavigate}>
+                {item.label ?? ''}
+              </a>
+            ) : (
+              <Link href={href} onClick={onNavigate}>
+                {item.label ?? ''}
+              </Link>
+            )}
             {hasChildren && (
               <button
                 type="button"
@@ -105,6 +115,7 @@ NavigationMenu.fragments = {
     fragment NavigationMenuItemFragment on MenuItem {
       id
       path
+      target
       label
       parentId
       cssClasses
