@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { NavigationMenu, SkipNavigationLink } from '../';
+import * as SELECTORS from '../../constants/selectors';
 
 import styles from './Header.module.scss';
 let cx = classNames.bind(styles);
@@ -52,6 +53,22 @@ export default function Header({ className, menuItems }) {
         ? current.filter((id) => id !== itemId)
         : [...current, itemId]
     );
+  };
+
+  const handleHomeClick = (event) => {
+    closeNavigation();
+
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    if (router.asPath === '/') {
+      event.preventDefault();
+
+      window.history.replaceState(null, '', '/');
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+      document.getElementById(SELECTORS.MAIN_CONTENT_ID)?.focus();
+    }
   };
 
   // Handle scroll detection
@@ -167,7 +184,7 @@ export default function Header({ className, menuItems }) {
         <div className="container">
           <div className={cx('logo')}>
             <Link legacyBehavior href="/">
-              <a title="Home">
+              <a title="Home" onClick={handleHomeClick}>
                 <Image
                   src="/logo.png"
                   width={400}
@@ -185,7 +202,7 @@ export default function Header({ className, menuItems }) {
 
       <div className={headerContentClasses}>
         <div className={cx('bar')}>
-          <Link href="/" className={cx('titleName')}>
+          <Link href="/" className={cx('titleName')} onClick={handleHomeClick}>
             Cal Poly Partners
           </Link>
 

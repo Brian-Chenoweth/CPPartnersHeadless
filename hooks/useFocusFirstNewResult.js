@@ -1,4 +1,3 @@
-import appConfig from 'app.config';
 import { useRef, useEffect, useState } from 'react';
 
 /**
@@ -10,24 +9,21 @@ import { useRef, useEffect, useState } from 'react';
  */
 export default function useFocusFirstNewResult(posts) {
   const firstNewResultRef = useRef();
+  const previousPostsLengthRef = useRef(posts?.length ?? 0);
   const [firstNewResultIndex, setFirstnewResultIndex] = useState(0);
 
   useEffect(() => {
-    const isPaginated = posts && posts.length > appConfig.postsPerPage;
+    const currentPostsLength = posts?.length ?? 0;
+    const previousPostsLength = previousPostsLengthRef.current;
+    const hasAppendedResults = currentPostsLength > previousPostsLength;
 
-    if (isPaginated) {
+    if (hasAppendedResults) {
+      setFirstnewResultIndex(previousPostsLength);
       firstNewResultRef.current?.focus();
-
-      setFirstnewResultIndex(() => {
-        const partialSetLength = posts.length % appConfig.postsPerPage;
-        const delta =
-          partialSetLength === 0 ? appConfig.postsPerPage : partialSetLength;
-        const focusIndex = posts.length - delta;
-
-        return focusIndex;
-      });
     }
-  }, [posts, firstNewResultIndex]);
+
+    previousPostsLengthRef.current = currentPostsLength;
+  }, [posts]);
 
   return { firstNewResultRef, firstNewResultIndex };
 }

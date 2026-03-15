@@ -1,14 +1,11 @@
 import * as MENUS from 'constants/menus';
 
 import { useQuery, gql } from '@apollo/client';
-import { FaArrowRight } from 'react-icons/fa';
 import styles from 'styles/pages/_Home.module.scss';
 import {
   EntryHeader,
   Main,
-  Button,
   Heading,
-  CTA,
   NavigationMenu,
   SEO,
   Header,
@@ -40,6 +37,7 @@ export default function Component() {
     data?.generalSettings;
   const primaryMenu = data?.headerMenuItems?.nodes ?? [];
   const footerMenu = data?.footerMenuItems?.nodes ?? [];
+  const homepagePosts = (data?.posts?.nodes ?? []).slice(0, postsPerPage);
 
   const mainBanner = {
     sourceUrl: '/static/banner.jpeg',
@@ -90,7 +88,7 @@ export default function Component() {
             <Heading className={styles.heading} level="h2">
               News
             </Heading>
-            <Posts posts={data.posts?.nodes} id="posts-list" />
+            <Posts posts={homepagePosts} id="posts-list" />
           </section>
 
         </div>

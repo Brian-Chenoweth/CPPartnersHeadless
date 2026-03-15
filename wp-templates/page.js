@@ -1,8 +1,11 @@
 import * as MENUS from 'constants/menus';
-import PageContent from 'components/PageContent';
 
-import { gql } from '@apollo/client';
+import { gql, useQuery } from '@apollo/client';
+import appConfig from 'app.config';
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
+import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { pageTitle } from 'utilities';
 
 import {
@@ -15,17 +18,15 @@ import {
   FeaturedImage,
   SEO,
   Posts,
+  LoadMore,
 } from '../components';
-
-import dynamic from 'next/dynamic';
-import { useEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
 
 // Client-only form to avoid SSR/client mismatch
 const ContactForm = dynamic(() => import('components/ContactForm'), { ssr: false });
 
 const TOKEN = '<!-- FORMSPREE_CONTACT -->';
 const SLOT_HTML = '<div id="contact-form-slot"></div>';
+const NEWS_PAGE_POST_COUNT = appConfig.postsPerPage;
 
 // Portals the ContactForm into the placeholder div after mount.
 function ContactFormIntoSlot() {
@@ -39,15 +40,26 @@ function ContactFormIntoSlot() {
 
 
 export default function Component(props) {
-  if (props.loading) return <>Loading...</>;
+  const pageData = props?.data?.page;
+  const isNewsPage = pageData?.slug === 'news';
+  const newsQuery = useQuery(Component.newsPostsQuery, {
+    variables: {
+      first: NEWS_PAGE_POST_COUNT,
+      after: '',
+    },
+    skip: !isNewsPage,
+    notifyOnNetworkStatusChange: true,
+  });
 
   const { title: siteTitle, description: siteDescription } =
     props?.data?.generalSettings;
   const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
-  const { title, content, featuredImage, slug, seoControls } = props?.data?.page ?? {};
+  const { title, content, featuredImage, slug, seoControls } = pageData ?? {};
   const noindex = !!seoControls?.disableIndexing;
-  const recentPosts = props?.data?.posts?.nodes ?? [];
+  const newsPostsConnection = newsQuery.data?.posts ?? props?.data?.posts;
+  const recentPosts =
+    newsPostsConnection?.edges?.map((edge) => edge?.node).filter(Boolean) ?? [];
 
   // Replace the marker with a stable placeholder DIV for SSR
   const htmlWithSlot = (content ?? '').split(TOKEN).join(SLOT_HTML);
@@ -58,6 +70,8 @@ export default function Component(props) {
       window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
     }
   }, [slug]);
+
+  if (props.loading) return <>Loading...</>;
 
   return (
     <>
@@ -82,6 +96,13 @@ export default function Component(props) {
             {slug === 'news' && (
               <div className="posts-listing-news-page">
                 <Posts posts={recentPosts} />
+                <LoadMore
+                  className="text-center"
+                  hasNextPage={newsPostsConnection?.pageInfo?.hasNextPage}
+                  endCursor={newsPostsConnection?.pageInfo?.endCursor}
+                  isLoading={newsQuery.loading}
+                  fetchMore={newsQuery.fetchMore}
+                />
               </div>
             )}
           </div>
@@ -104,6 +125,8 @@ Component.variables = ({ databaseId }, ctx) => {
     footerLocation: MENUS.FOOTER_LOCATION,
     footerSecondaryLocation: MENUS.FOOTER_SECONDARY_LOCATION,
     footerTertiaryLocation: MENUS.FOOTER_TERTIARY_LOCATION,
+    first: NEWS_PAGE_POST_COUNT,
+    after: '',
     asPreview: ctx?.asPreview,
   };
 };
@@ -112,15 +135,19 @@ Component.query = gql`
   ${BlogInfoFragment}
   ${NavigationMenu.fragments.entry}
   ${FeaturedImage.fragments.entry}
+  ${Posts.fragments.entry}
   query GetPageData(
     $databaseId: ID!
     $headerLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
     $footerSecondaryLocation: MenuLocationEnum
     $footerTertiaryLocation: MenuLocationEnum
+    $first: Int!
+    $after: String
     $asPreview: Boolean = false
   ) {
     page(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
+      databaseId
       title
       content
       slug
@@ -129,24 +156,17 @@ Component.query = gql`
       }
       ...FeaturedImageFragment
     }
-    posts(first: 16) {
-      nodes {
-        id
-        title
-        uri
-        date
-        excerpt
-        ... on NodeWithContentEditor {
-          content
+    posts(first: $first, after: $after) {
+      edges {
+        node {
+          ...PostsItemFragment
         }
-        ... on NodeWithAuthor {
-          author {
-            node {
-              name
-            }
-          }
-        }
-        ...FeaturedImageFragment
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
       }
     }
     generalSettings {
@@ -170,6 +190,25 @@ Component.query = gql`
     footerTertiaryMenuItems: menuItems(where: { location: $footerTertiaryLocation }) {
       nodes {
         ...NavigationMenuItemFragment
+      }
+    }
+  }
+`;
+
+Component.newsPostsQuery = gql`
+  ${Posts.fragments.entry}
+  query GetNewsPagePosts($first: Int!, $after: String) {
+    posts(first: $first, after: $after) {
+      edges {
+        node {
+          ...PostsItemFragment
+        }
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
       }
     }
   }
