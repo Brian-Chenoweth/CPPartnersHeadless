@@ -10,6 +10,7 @@ import * as SELECTORS from '../../constants/selectors';
 
 import styles from './Header.module.scss';
 let cx = classNames.bind(styles);
+const NAV_COLLAPSE_BREAKPOINT = 1212;
 
 export default function Header({ className, menuItems }) {
   const [isNavShown, setIsNavShown] = useState(false);
@@ -122,7 +123,7 @@ export default function Header({ className, menuItems }) {
       if (!submenu) return;
 
       const handlePositionSubmenu = () => {
-        if (window.innerWidth < 768) {
+        if (window.innerWidth < NAV_COLLAPSE_BREAKPOINT) {
           resetSubmenuPosition(submenu);
           li.classList.remove('submenu-align-end', 'submenu-open-left');
           return;
