@@ -92,31 +92,67 @@ export default function Header({ className, menuItems }) {
 
   // Handle submenu overflow flipping
   useEffect(() => {
-    const items = menuRef.current?.querySelectorAll('li') || [];
+    const items = menuRef.current?.querySelectorAll('li.hasChildren') || [];
     const cleanups = [];
 
+    const resetSubmenuPosition = (submenu) => {
+      submenu.style.left = '';
+      submenu.style.right = '';
+    };
+
     items.forEach((li) => {
-      const submenu = li.querySelector('ul ul'); // 3rd-level menu
+      const submenu = li.querySelector(':scope > ul');
       if (!submenu) return;
 
-      const handleEnter = () => {
-        const rect = submenu.getBoundingClientRect();
-        const overflowsRight = rect.right > window.innerWidth;
+      const handlePositionSubmenu = () => {
+        if (window.innerWidth < 768) {
+          resetSubmenuPosition(submenu);
+          li.classList.remove('submenu-align-end', 'submenu-open-left');
+          return;
+        }
 
-        if (overflowsRight) {
-          submenu.style.left = 'auto';
-          submenu.style.right = '100%';
+        const isTopLevel = li.parentElement?.classList.contains('menu');
+
+        li.classList.remove('submenu-align-end', 'submenu-open-left');
+        resetSubmenuPosition(submenu);
+
+        if (isTopLevel) {
+          submenu.style.left = '0';
+          submenu.style.right = 'auto';
         } else {
           submenu.style.left = '100%';
           submenu.style.right = 'auto';
         }
+
+        const rect = submenu.getBoundingClientRect();
+        const overflowsRight = rect.right > window.innerWidth;
+        const overflowsLeft = rect.left < 0;
+
+        if (isTopLevel) {
+          if (overflowsRight) {
+            li.classList.add('submenu-align-end');
+            submenu.style.left = 'auto';
+            submenu.style.right = '0';
+          }
+
+          return;
+        }
+
+        if (overflowsRight && !overflowsLeft) {
+          li.classList.add('submenu-open-left');
+          submenu.style.left = 'auto';
+          submenu.style.right = '100%';
+        }
       };
 
-      li.addEventListener('mouseenter', handleEnter);
-      li.addEventListener('focusin', handleEnter);
+      li.addEventListener('mouseenter', handlePositionSubmenu);
+      li.addEventListener('focusin', handlePositionSubmenu);
+      window.addEventListener('resize', handlePositionSubmenu);
+
       cleanups.push(() => {
-        li.removeEventListener('mouseenter', handleEnter);
-        li.removeEventListener('focusin', handleEnter);
+        li.removeEventListener('mouseenter', handlePositionSubmenu);
+        li.removeEventListener('focusin', handlePositionSubmenu);
+        window.removeEventListener('resize', handlePositionSubmenu);
       });
     });
 
@@ -193,11 +229,13 @@ export default function Header({ className, menuItems }) {
             expandedItems={expandedItems}
             onToggleItem={toggleExpandedItem}
           >
-            <li className="mobile-search-link">
-              <Link href="/search" onClick={closeNavigation}>
-                Search
-              </Link>
-            </li>
+            {isNavShown ? (
+              <li className="mobile-search-link">
+                <Link href="/search" onClick={closeNavigation}>
+                  Search
+                </Link>
+              </li>
+            ) : null}
           </NavigationMenu>
 
           {isNavShown ? (

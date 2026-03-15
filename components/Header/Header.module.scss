@@ -248,6 +248,12 @@
     @media (max-width: 767px) {
       border-bottom: 1px solid rgba(21, 71, 52, 0.08);
     }
+
+    @media (min-width: $breakpoint-small) {
+      display: flex;
+      align-items: stretch;
+      height: 100%;
+    }
   }
 
   :global(.menu > li > .menu-link-row > a) {
@@ -260,6 +266,11 @@
     justify-content: space-between;
     gap: 0.75rem;
     min-height: 100%;
+
+    @media (min-width: $breakpoint-small) {
+      position: relative;
+      height: 100%;
+    }
   }
 
   :global(a) {
@@ -278,6 +289,17 @@
     @media (min-width: $breakpoint-small) {
       padding: 0 1rem;
       height: 100%;
+    }
+  }
+
+  :global(.menu > li.hasChildren > .menu-link-row::after) {
+    @media (min-width: $breakpoint-small) {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      height: 16px;
     }
   }
 
@@ -330,16 +352,20 @@
 
     @media (min-width: $breakpoint-small) {
       position: absolute;
-      top: 100%;
-      right: 0;
+      top: calc(100% + 10px);
+      left: 0;
+      right: auto;
       min-width: 240px;
-      padding: 0.5rem 0 0;
+      padding: 0.75rem 0;
       background-color: #e4ece8;
       border-top: 3px solid var(--color-primary);
+      border-radius: 0 0 18px 18px;
+      box-shadow: 0 18px 38px rgba(17, 24, 39, 0.12);
       opacity: 0;
       visibility: hidden;
       transform: translateY(6px);
       transition: opacity 0.2s ease, transform 0.2s ease;
+      pointer-events: none;
       z-index: 1000;
     }
   }
@@ -361,13 +387,28 @@
 
   :global(li ul li ul) {
     @media (min-width: $breakpoint-small) {
-      top: 0;
-      right: 100%;
-      padding: 0;
+      top: -0.75rem;
+      left: calc(100% + 10px);
+      right: auto;
+      padding: 0.75rem 0;
       border-top: 3px solid var(--color-primary);
       background-color: #e4ece8;
       min-width: 240px;
       z-index: 1001;
+    }
+  }
+
+  :global(li.submenu-align-end > ul) {
+    @media (min-width: $breakpoint-small) {
+      left: auto;
+      right: 0;
+    }
+  }
+
+  :global(li.submenu-open-left > ul) {
+    @media (min-width: $breakpoint-small) {
+      left: auto;
+      right: calc(100% + 10px);
     }
   }
 
