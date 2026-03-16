@@ -5,7 +5,6 @@ import {
   Header,
   Footer,
   Main,
-  EntryHeader,
   NavigationMenu,
   ContentWrapper,
   FeaturedImage,
@@ -13,9 +12,8 @@ import {
   Posts,
 } from 'components';
 import Image from 'next/image';
-import { pageTitle } from 'utilities';
+import { buildKeywordString, buildMetaDescription, pageTitle } from 'utilities';
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
-import styles from 'styles/pages/_Home.module.scss';
 
 export default function Component(props) {
   if (props.loading) {
@@ -38,6 +36,22 @@ export default function Component(props) {
   } = props.data.post;
 
   const recentPosts = props?.data?.posts?.nodes ?? [];
+  const description = buildMetaDescription({
+    title,
+    content,
+    fallback: siteDescription,
+  });
+  const keywords = buildKeywordString({
+    title,
+    content,
+    seedKeywords: [
+      'news',
+      'blog',
+      'cal poly partners',
+      'conference planning',
+      'event planning',
+    ],
+  });
 
   // 🔹 Date formatter
   function formatDate(dateString) {
@@ -69,7 +83,8 @@ export default function Component(props) {
           title,
           props?.data?.generalSettings?.title
         )}
-        description={siteDescription}
+        description={description}
+        keywords={keywords}
         imageUrl={featuredImage?.node?.sourceUrl}
       />
       <Header

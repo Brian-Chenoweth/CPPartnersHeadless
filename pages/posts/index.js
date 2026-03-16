@@ -14,7 +14,7 @@ import {
   NavigationMenu,
 } from 'components';
 import { getNextStaticProps } from '@faustwp/core';
-import { pageTitle } from 'utilities';
+import { buildKeywordString, buildMetaDescription, pageTitle } from 'utilities';
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
 import appConfig from 'app.config';
 
@@ -31,10 +31,26 @@ export default function Page() {
   const primaryMenu = data?.headerMenuItems?.nodes ?? [];
   const footerMenu = data?.footerMenuItems?.nodes ?? [];
   const postList = data.posts.edges.map((el) => el.node);
+  const description = buildMetaDescription({
+    title: 'Latest Posts',
+    content: postList
+      .map((post) => `${post?.title ?? ''} ${post?.excerpt ?? ''}`)
+      .join(' '),
+    fallback: 'Read the latest updates, stories, and announcements from Cal Poly Partners.',
+  });
+  const keywords = buildKeywordString({
+    title: 'Latest Posts',
+    content: description,
+    seedKeywords: ['latest posts', 'news', 'blog', 'cal poly partners'],
+  });
 
   return (
     <>
-      <SEO title={pageTitle(data?.generalSettings)} />
+      <SEO
+        title={pageTitle(data?.generalSettings, 'Latest Posts')}
+        description={description}
+        keywords={keywords}
+      />
 
       <Header menuItems={primaryMenu} />
 

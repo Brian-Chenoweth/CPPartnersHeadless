@@ -1,5 +1,6 @@
 import { gql, useQuery } from '@apollo/client';
-import { pageTitle } from 'utilities';
+import appConfig from 'app.config';
+import { buildKeywordString, buildMetaDescription, pageTitle } from 'utilities';
 
 import * as MENUS from '../constants/menus';
 import { BlogInfoFragment } from '../fragments/GeneralSettings';
@@ -14,7 +15,6 @@ import {
   FeaturedImage,
   SEO,
 } from '../components';
-import appConfig from 'app.config';
 
 export default function Archive(props) {
   const { uri, name, __typename } = props.data.nodeByUri;
@@ -31,16 +31,24 @@ export default function Archive(props) {
   const primaryMenu = data?.headerMenuItems?.nodes ?? [];
   const footerMenu = data?.footerMenuItems?.nodes ?? [];
   const postList = data.nodeByUri?.contentNodes?.edges.map((el) => el.node);
+  const archiveTitle = `${__typename}: ${name}`;
+  const archiveDescription = buildMetaDescription({
+    title: archiveTitle,
+    content: data?.nodeByUri?.description,
+    fallback: `Browse ${name} content from ${siteTitle}.`,
+  });
+  const archiveKeywords = buildKeywordString({
+    title: archiveTitle,
+    content: data?.nodeByUri?.description,
+    seedKeywords: [name, 'archive', 'cal poly partners', 'conference planning'],
+  });
 
   return (
     <>
       <SEO
-        title={pageTitle(
-          props?.data?.generalSettings,
-          `${__typename}: ${name}`,
-          siteTitle
-        )}
-        description={siteDescription}
+        title={pageTitle(props?.data?.generalSettings, archiveTitle, siteTitle)}
+        description={archiveDescription || siteDescription}
+        keywords={archiveKeywords}
       />
       <Header
         title={siteTitle}
@@ -49,7 +57,7 @@ export default function Archive(props) {
       />
       <Main>
         <>
-          <EntryHeader title={`${__typename}: ${name}`} />
+          <EntryHeader title={archiveTitle} />
           <div className="container">
             <Posts posts={postList} />
             <LoadMore
@@ -63,11 +71,9 @@ export default function Archive(props) {
         </>
       </Main>
       <Footer
-  title={siteTitle}
-  menuItems={footerMenu}
-  navOneMenuItems={data?.footerSecondaryMenuItems?.nodes ?? []}
-  quickLinksMenuItems={data?.footerTertiaryMenuItems?.nodes ?? []}
-/>
+        title={siteTitle}
+        menuItems={footerMenu}
+      />
     </>
   );
 }

@@ -18,6 +18,7 @@ import { useState } from 'react';
 import { GetSearchResults } from 'queries/GetSearchResults';
 import styles from 'styles/pages/_Search.module.scss';
 import appConfig from 'app.config';
+import { buildKeywordString, buildMetaDescription } from 'utilities';
 
 export default function Page() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -55,10 +56,29 @@ export default function Page() {
     (pageData?.footerTertiaryMenuItems?.nodes?.length
       ? pageData.footerTertiaryMenuItems.nodes
       : pageData?.footerTertiaryByName?.menuItems?.nodes) ?? [];
+  const resultText = searchResultsData?.contentNodes?.edges
+    ?.map(({ node }) => `${node?.title ?? ''} ${node?.excerpt ?? ''}`)
+    .join(' ');
+  const searchDescription = searchQuery
+    ? buildMetaDescription({
+        title: `Search results for ${searchQuery}`,
+        content: resultText,
+        fallback: `Search results for "${searchQuery}" across Cal Poly Partners content.`,
+      })
+    : 'Search Cal Poly Partners content, projects, resources, and news.';
+  const searchKeywords = buildKeywordString({
+    title: searchQuery ? `Search ${searchQuery}` : 'Search',
+    content: `${searchDescription} ${searchQuery}`,
+    seedKeywords: ['search', 'site search', 'cal poly partners'],
+  });
 
   return (
     <>
-      <SEO title={siteTitle} description={siteDescription} />
+      <SEO
+        title={searchQuery ? `${searchQuery} Search - ${siteTitle}` : `Search - ${siteTitle}`}
+        description={searchDescription || siteDescription}
+        keywords={searchKeywords}
+      />
 
       <Header
         title={siteTitle}

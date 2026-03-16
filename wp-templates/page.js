@@ -6,7 +6,7 @@ import { BlogInfoFragment } from 'fragments/GeneralSettings';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { pageTitle } from 'utilities';
+import { buildKeywordString, buildMetaDescription, pageTitle } from 'utilities';
 
 import {
   Header,
@@ -57,6 +57,16 @@ export default function Component(props) {
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
   const { title, content, featuredImage, slug, seoControls } = pageData ?? {};
   const noindex = !!seoControls?.disableIndexing;
+  const description = buildMetaDescription({
+    title,
+    content,
+    fallback: siteDescription,
+  });
+  const keywords = buildKeywordString({
+    title,
+    content,
+    seedKeywords: ['cal poly partners', 'conference planning', 'event planning'],
+  });
   const newsPostsConnection = newsQuery.data?.posts ?? props?.data?.posts;
   const recentPosts =
     newsPostsConnection?.edges?.map((edge) => edge?.node).filter(Boolean) ?? [];
@@ -77,7 +87,8 @@ export default function Component(props) {
     <>
       <SEO
         title={pageTitle(props?.data?.generalSettings, title, siteTitle)}
-        description={siteDescription}
+        description={description}
+        keywords={keywords}
         imageUrl={featuredImage?.node?.sourceUrl}
         noindex={noindex}
       />

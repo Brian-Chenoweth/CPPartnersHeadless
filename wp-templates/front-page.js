@@ -22,6 +22,7 @@ import {
   HomepageFoodInsecurity,
 } from 'components';
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
+import { buildKeywordString } from 'utilities';
 
 const postsPerPage = 4;
 
@@ -38,6 +39,19 @@ export default function Component() {
   const primaryMenu = data?.headerMenuItems?.nodes ?? [];
   const footerMenu = data?.footerMenuItems?.nodes ?? [];
   const homepagePosts = (data?.posts?.nodes ?? []).slice(0, postsPerPage);
+  const homeDescription =
+    'Cal Poly Partners supports conferences, events, dining, housing, staffing, and campus experiences with end-to-end planning and on-site coordination.';
+  const homeKeywords = buildKeywordString({
+    title: siteTitle,
+    content: `${homeDescription} Explore event support, testimonials, nonprofit services, campus life programs, attainable housing initiatives, and recent news.`,
+    seedKeywords: [
+      'cal poly partners',
+      'conference planning',
+      'event planning',
+      'campus events',
+      'guest services',
+    ],
+  });
 
   const mainBanner = {
     sourceUrl: '/static/banner.jpeg',
@@ -46,7 +60,11 @@ export default function Component() {
   };
   return (
     <>
-      <SEO title={siteTitle} description={siteDescription} />
+      <SEO
+        title={siteTitle}
+        description={homeDescription || siteDescription}
+        keywords={homeKeywords}
+      />
 
       <Header
         title={siteTitle}

@@ -13,21 +13,41 @@ import {
   SEO,
 } from 'components';
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
+import { buildKeywordString, buildMetaDescription } from 'utilities';
 
 export default function Component(props) {
   // Loading state for previews
   if (props.loading) {
     return <>Loading...</>;
   }
-  const { title: siteTitle } = props?.data?.generalSettings;
+  const { title: siteTitle, description: siteDescription } =
+    props?.data?.generalSettings;
   const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
   const { featuredImage } = props.data.project;
   const { title, summary, contentArea } = props.data.project.projectFields;
+  const description = buildMetaDescription({
+    title,
+    content: `${summary ?? ''} ${contentArea ?? ''}`,
+    fallback: siteDescription,
+  });
+  const keywords = buildKeywordString({
+    title,
+    content: `${summary ?? ''} ${contentArea ?? ''}`,
+    seedKeywords: [
+      'project',
+      'portfolio',
+      'cal poly partners',
+      'conference planning',
+      'event planning',
+    ],
+  });
   return (
     <>
       <SEO
         title={`${title} - ${props?.data?.generalSettings?.title}`}
+        description={description}
+        keywords={keywords}
         imageUrl={featuredImage?.node?.sourceUrl}
       />
 
@@ -46,11 +66,9 @@ export default function Component(props) {
       </Main>
 
       <Footer
-  title={siteTitle}
-  menuItems={footerMenu}
-  navOneMenuItems={data?.footerSecondaryMenuItems?.nodes ?? []}
-  quickLinksMenuItems={data?.footerTertiaryMenuItems?.nodes ?? []}
-/>
+        title={siteTitle}
+        menuItems={footerMenu}
+      />
     </>
   );
 }

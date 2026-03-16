@@ -18,6 +18,7 @@ import { useState } from 'react';
 import { GetSearchResults } from 'queries/GetSearchResults';
 import styles from 'styles/pages/_Search.module.scss';
 import appConfig from 'app.config';
+import { buildKeywordString } from 'utilities';
 
 export default function Page() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -55,10 +56,22 @@ export default function Page() {
     (pageData?.footerTertiaryMenuItems?.nodes?.length
       ? pageData.footerTertiaryMenuItems.nodes
       : pageData?.footerTertiaryByName?.menuItems?.nodes) ?? [];
+  const description =
+    'The page you requested could not be found. Search the site to find related Cal Poly Partners content.';
+  const keywords = buildKeywordString({
+    title: '404 page not found',
+    content: description,
+    seedKeywords: ['404', 'page not found', 'site search', 'cal poly partners'],
+  });
 
   return (
     <>
-      <SEO title={siteTitle} description={siteDescription} />
+      <SEO
+        title={`404 - ${siteTitle || 'Page Not Found'}`}
+        description={description}
+        keywords={keywords}
+        noindex
+      />
 
       <Header
         title={siteTitle}

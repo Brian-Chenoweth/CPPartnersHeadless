@@ -14,7 +14,7 @@ import {
   NavigationMenu,
 } from 'components';
 import { getNextStaticProps } from '@faustwp/core';
-import { pageTitle } from 'utilities';
+import { buildKeywordString, buildMetaDescription, pageTitle } from 'utilities';
 import { BlogInfoFragment } from 'fragments/GeneralSettings';
 import appConfig from 'app.config';
 
@@ -31,9 +31,28 @@ export default function Page() {
   const primaryMenu = data?.headerMenuItems?.nodes ?? [];
   const footerMenu = data?.footerMenuItems?.nodes ?? [];
   const projectList = data?.projects?.nodes ?? [];
+  const description = buildMetaDescription({
+    title: 'Projects',
+    content: projectList
+      .map(
+        (project) =>
+          `${project?.projectFields?.title ?? ''} ${project?.projectFields?.summary ?? ''}`
+      )
+      .join(' '),
+    fallback: 'Browse featured Cal Poly Partners projects, programs, and portfolio work.',
+  });
+  const keywords = buildKeywordString({
+    title: 'Projects',
+    content: description,
+    seedKeywords: ['projects', 'portfolio', 'cal poly partners', 'event planning'],
+  });
   return (
     <>
-      <SEO title={pageTitle(data?.generalSettings, 'Projects')} />
+      <SEO
+        title={pageTitle(data?.generalSettings, 'Projects')}
+        description={description}
+        keywords={keywords}
+      />
 
       <Header menuItems={primaryMenu} />
 
@@ -52,11 +71,11 @@ export default function Page() {
       </Main>
 
       <Footer
-  title={siteTitle}
-  menuItems={footerMenu}
-  navOneMenuItems={data?.footerSecondaryMenuItems?.nodes ?? []}
-  quickLinksMenuItems={data?.footerTertiaryMenuItems?.nodes ?? []}
-/>
+        title={siteTitle}
+        menuItems={footerMenu}
+        navOneMenuItems={data?.footerSecondaryMenuItems?.nodes ?? []}
+        quickLinksMenuItems={data?.footerTertiaryMenuItems?.nodes ?? []}
+      />
     </>
   );
 }
