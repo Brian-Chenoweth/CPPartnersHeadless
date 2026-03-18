@@ -30,16 +30,12 @@ export default function SEO({
     'https://use.typekit.net/qnm1phw.css',
     'https://use.typekit.net/ato6pec.css',
   ];
-  const googleFontStylesheet =
-    'https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;500;600;700&display=swap';
 
   return (
     <>
       <Head>
         <link rel="preconnect" href="https://use.typekit.net" />
         <link rel="preconnect" href="https://p.typekit.net" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://fonts.googleapis.com"/>
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
         {typekitStylesheets.map((href) => (
           <link key={`${href}-preload`} rel="preload" as="style" href={href} />
@@ -59,19 +55,6 @@ export default function SEO({
           {typekitStylesheets.map((href) => (
             <link key={`${href}-noscript`} rel="stylesheet" href={href} />
           ))}
-        </noscript>
-
-        <link rel="preload" as="style" href={googleFontStylesheet} />
-        <link
-          rel="stylesheet"
-          href={googleFontStylesheet}
-          media="print"
-          onLoad={(event) => {
-            event.currentTarget.media = 'all';
-          }}
-        />
-        <noscript>
-          <link rel="stylesheet" href={googleFontStylesheet} />
         </noscript>
         {/* <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/> */}
 

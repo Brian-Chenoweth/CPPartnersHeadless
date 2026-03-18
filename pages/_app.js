@@ -4,6 +4,10 @@ import { useRouter } from 'next/router';
 import { FaustProvider } from '@faustwp/core';
 import Script from 'next/script';
 import 'normalize.css/normalize.css';
+import '@fontsource/source-sans-pro/300.css';
+import '@fontsource/source-sans-pro/400.css';
+import '@fontsource/source-sans-pro/600.css';
+import '@fontsource/source-sans-pro/700.css';
 import '../styles/main.scss';
 import ThemeStyles from 'components/ThemeStyles/ThemeStyles';
 
