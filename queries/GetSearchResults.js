@@ -7,13 +7,15 @@ export const GetSearchResults = gql`
         node {
           id
           uri
-          date
           databaseId
           ... on NodeWithTitle {
             title
           }
           ... on NodeWithExcerpt {
             excerpt
+          }
+          ... on NodeWithContentEditor {
+            content
           }
         }
       }

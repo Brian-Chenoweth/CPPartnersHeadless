@@ -13,9 +13,16 @@ $color-grey: #777;
   color: var(--color-black);
 }
 
-.meta {
-  font-size: small;
-  margin-bottom: 2rem;
+.excerpt {
+  margin-top: 1.6rem;
+  line-height: 1.7;
+  color: var(--color-black);
+}
+
+.highlight {
+  background: #f4dd72;
+  color: inherit;
+  padding: 0 0.15em;
 }
 
 .no-results {

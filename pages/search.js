@@ -113,6 +113,7 @@ export default function Page() {
               ({ node }) => node
             )}
             isLoading={searchResultsLoading}
+            searchQuery={searchQuery}
           />
 
           {searchResultsData?.contentNodes?.pageInfo?.hasNextPage && (
