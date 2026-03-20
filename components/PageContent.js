@@ -1,6 +1,7 @@
 // components/PageContent.js
 import { useEffect } from 'react';
 import { CountUp } from 'countup.js';
+import { rewriteBackendLinksInHtml } from 'utilities';
 
 export default function PageContent({ html }) {
   useEffect(() => {
@@ -12,5 +13,5 @@ export default function PageContent({ html }) {
     });
   }, [html]);
 
-  return <div dangerouslySetInnerHTML={{ __html: html }} />;
+  return <div dangerouslySetInnerHTML={{ __html: rewriteBackendLinksInHtml(html) }} />;
 }

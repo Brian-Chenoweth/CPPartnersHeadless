@@ -2,6 +2,7 @@ import { forwardRef } from 'react';
 import { gql } from '@apollo/client';
 import Link from 'next/link';
 import { FaChevronDown } from 'react-icons/fa';
+import { normalizeInternalLink } from 'utilities';
 
 const NavigationMenu = forwardRef(function NavigationMenu(
   {
@@ -44,7 +45,7 @@ const NavigationMenu = forwardRef(function NavigationMenu(
       const hasChildren = item.children?.length > 0;
       const isExpanded = expandedItems.includes(item.id);
       const submenuId = `submenu-${item.id}`;
-      const href = item.path ?? '';
+      const href = normalizeInternalLink(item.path ?? '');
       const target = item.target || undefined;
       const rel = target === '_blank' ? 'noopener noreferrer' : undefined;
       const isExternalLink = /^(https?:|mailto:|tel:|\/\/)/i.test(href);

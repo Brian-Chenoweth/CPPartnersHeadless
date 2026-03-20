@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import parse, { domToReact } from 'html-react-parser';
+import parse, { attributesToProps, domToReact } from 'html-react-parser';
 import className from 'classnames/bind';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import { normalizeInternalLink } from 'utilities';
 
 import styles from './ContentWrapper.module.scss';
 
@@ -24,6 +25,16 @@ export default function ContentWrapper({ content, className, children }) {
   }, []);
 
   const transform = (node) => {
+    if (node.name === 'a' && node.attribs?.href) {
+      const props = attributesToProps(node.attribs);
+
+      return (
+        <a {...props} href={normalizeInternalLink(node.attribs.href)}>
+          {domToReact(node.children ?? [], parserOptions)}
+        </a>
+      );
+    }
+
     const isTickerGroup =
       node.name === 'div' &&
       node.attribs?.class?.includes('wp-block-group') &&
@@ -53,16 +64,18 @@ export default function ContentWrapper({ content, className, children }) {
           transitionTime={700}
         >
           {figures.map((fig, index) => (
-            <div key={index}>{domToReact([fig])}</div>
+            <div key={index}>{domToReact([fig], parserOptions)}</div>
           ))}
         </Carousel>
       );
     }
   };
 
+  const parserOptions = { replace: transform };
+
   return (
     <article className={cx('content', className)}>
-      {parse(content ?? '', { replace: transform })}
+      {parse(content ?? '', parserOptions)}
       {children}
     </article>
   );
